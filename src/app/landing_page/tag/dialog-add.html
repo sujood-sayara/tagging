@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Add Tag</h1>
+<div mat-dialog-content>
+  <form [formGroup]="newTag" (ngSubmit)="addTag()">
+    <label> Tag name: </label> <br>
+    <input type="text" placeholder="" required formControlName="tagName" /> <br>
+    <label> Tag color: </label> <br>
+    <input type="color" id="favcolor" name="favcolor" value="#800080" required formControlName="tagColor"><br>
+    <button type="submit" [disabled]="!newTag.valid">save</button>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</div>
