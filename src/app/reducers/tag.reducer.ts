@@ -1,9 +1,10 @@
 import { tagsActionTypes } from '../../actions/tag.action';
 import { tagAction } from '../../actions/tag.action';
-import { tag } from 'src/models/tag';
+import { Tag } from 'src/models/tag';
+import * as _ from 'lodash';
 
 export interface tagState {
-  tags: tag[];
+  tags: Tag[];
   loaded: boolean;
 }
 
@@ -44,6 +45,22 @@ export function reducertag(state: tagState = initialState, action: tagAction) {
         tags: [...state.tags.filter((tag) => tag._id !== action.payload)],
       };
     case tagsActionTypes.DELETE_tags_Success:
+      return {
+        ...state,
+      };
+    case tagsActionTypes.UPDATE_tags:
+      const stateCopy = _.cloneDeep(state);
+
+      let index = stateCopy.tags.findIndex((tag) => {
+        return tag._id === action.payload._id;
+      });
+      stateCopy.tags[index] = action.payload;
+
+      return {
+        stateCopy,
+        //images: [...state.images.filter((image) => image.id !== action.id),],
+      };
+    case tagsActionTypes.UPDATE_tags_Success:
       return {
         ...state,
       };

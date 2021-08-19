@@ -15,9 +15,7 @@ export class RegisterComponent implements OnInit {
     username: new FormControl(''),
     password: new FormControl(''),
   });
-  constructor(private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
+  constructor(
     private userService: UserService,
     ){ }
 
@@ -28,7 +26,7 @@ export class RegisterComponent implements OnInit {
       .signup(
         this.registerForm.controls.username.value,
         this.registerForm.controls.password.value
-      ).subscribe((data) => console.log(data))
+      ).subscribe()
   }
 
 }

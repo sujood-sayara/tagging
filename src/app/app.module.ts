@@ -20,7 +20,7 @@ import { MainPageComponent } from './landing_page/main-page/main-page.component'
 import { HeaderComponent } from './shared/header/header.component';
 import { TagComponent } from './landing_page/tag/tag.component';
 import { MatTableModule } from '@angular/material/table';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule} from '@angular/material/dialog';
 import { AddDialog } from './landing_page/tag/tag.component';
 import { EffectsModule } from '@ngrx/effects';
 import { reducertag } from './reducers/tag.reducer';
@@ -28,6 +28,20 @@ import { tagEffects } from './effects/tag.effect';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { imageEffects } from './effects/image.effect';
+import { reducerimage } from './reducers/image.reducer';
+import { AddImageDialog } from './landing_page/main-page/addImageDialog';
+import { UpdateTagDialog } from './landing_page/main-page/updateImageDialog';
+import {MatSelectModule} from '@angular/material/select';
+import {CarouselModule, ModalModule, WavesModule } from 'angular-bootstrap-md'
+import { ButtonsModule, CardsModule } from 'angular-bootstrap-md'
+import { updateDialog } from './landing_page/tag/updateTag_dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { ConfirmationDialog } from './shared/header/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +52,10 @@ import { MatInputModule } from '@angular/material/input';
     HeaderComponent,
     TagComponent,
     AddDialog,
+    AddImageDialog,
+    UpdateTagDialog,
+    updateDialog,
+    ConfirmationDialog,
   ],
   imports: [
     BrowserModule,
@@ -64,8 +82,19 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
     MatFormFieldModule,
     RouterModule.forRoot(routes),
-    StoreModule.forRoot({ tag: reducertag }),
-    EffectsModule.forRoot([tagEffects]),
+    StoreModule.forRoot({ tag: reducertag, image: reducerimage }),
+    EffectsModule.forRoot([tagEffects, imageEffects]),
+    MatCardModule,
+    MatToolbarModule,
+    MatButtonModule,
+    FlexLayoutModule,
+    MatSelectModule, 
+    CarouselModule.forRoot(),
+    ModalModule.forRoot(),
+    WavesModule.forRoot(),
+    ButtonsModule, 
+    CardsModule,
+    MatSnackBarModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

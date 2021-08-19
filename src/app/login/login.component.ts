@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService } from '..//services/authentication.service';
-import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,18 +10,16 @@ import { Store } from '@ngrx/store';
 })
 export class LoginComponent implements OnInit {
   returnUrl!: string;
+  hide = true;
   constructor(
-    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService,
+    private authenticationService: AuthenticationService
   ) {}
   loginForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
   });
-  hide = true;
-  retUrl: string = 'login';
 
   ngOnInit(): void {
     localStorage.setItem('jwt', null);
@@ -41,10 +37,8 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['home']);
         },
         (error) => {
-          console.log(JSON.stringify(null));
           localStorage.setItem('jwt', JSON.stringify(null));
           this.router.navigate(['login']); //Error callback
-          console.error(error);
         }
       );
   }

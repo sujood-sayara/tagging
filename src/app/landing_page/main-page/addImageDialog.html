@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Add Image</h1>
+<div mat-dialog-content>
+  <form [formGroup]="addForm" (ngSubmit)="submitForm()">
+    <label> Image name: </label> <br>
+    <input type="text" placeholder="" required formControlName="name"/> <br>
+    <input style="width: 500px;" type=file accept="image/*" (change)="uploadFile($event)"><br><br>
+    <label for="tags">Choose Tag:</label>
+    <select formControlName="tagIds" id="tagIds" >
+      <option *ngFor="let tag of tags; let i = index" style="background-color: {{tag.tagColor}};" [value]="tag._id">
+        {{tag.tagName}}
+      </option>
+    </select>
+    <br><br>
+    <button type="submit">save</button>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</div>

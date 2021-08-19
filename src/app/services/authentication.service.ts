@@ -13,9 +13,7 @@ export class AuthenticationService {
   public user: Observable<user>;
   private isloggedIn: boolean;
   constructor(private router: Router, private http: HttpClient) {
-    //  this.userSubject = new BehaviorSubject<user>(JSON.parse(localStorage.getItem('user')));
-    //this.user = this.userSubject.asObservable();
-    this.isloggedIn=false;
+    this.isloggedIn = false;
   }
 
   getAuthToken(username: string, password: string) {
@@ -24,38 +22,18 @@ export class AuthenticationService {
       password,
     });
   }
-  public get userValue(): user {
   
-    return this.userSubject.value;
-  }
-
   login(username: string, password: string) {
-    // this.http.post<any>('http://localhost:3000/api/user/login', {
-    //   username,
-    //   password,
-    // }).pipe(
-    //    map((user) => {
-    //      console.log(user);
-    //    console.log('Hi');
-    // // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
-    //     //console.log(user.json());
-    //   // localStorage.setItem('user', JSON.stringify(user));
-    //   this.userSubject.next(user);
-        
-    //  })
-    // );
-    //this.user=of(this.isloggedIn);
-    this.isloggedIn=true;
-  
+    this.isloggedIn = true;
+
     return this.http.post<any>('http://localhost:3000/api/user/login', {
       username,
       password,
     });
-    
   }
   isUserLoggedIn(): boolean {
     return this.isloggedIn;
-}
+  }
 
   logout() {
     // remove user from local storage to log user out

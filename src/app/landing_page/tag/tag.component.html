@@ -8,11 +8,11 @@
     <input matInput (keyup)="applyFilter($event)" #input>
   </mat-form-field>
 <table mat-table [dataSource]="dataSource"  matSort class="mat-elevation-z8">
-  <ng-container matColumnDef="tagname">
+  <ng-container matColumnDef="tagName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> tag name </th>
     <td mat-cell *matCellDef="let element"> {{element.tagName}} </td>
   </ng-container>
-  <ng-container matColumnDef="tagcolor">
+  <ng-container matColumnDef="tagColor">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> tag color </th>
     <td mat-cell *matCellDef="let element">
       <pre style="width:100px;background-color: {{element.tagColor}};">{{element.tagColor}}       </pre>
@@ -22,8 +22,13 @@
 
   <ng-container matColumnDef="delete">
     <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let element"><input type="button" value="Delete" (click)="onDelete(element._id)"></td>
-
+    <td mat-cell *matCellDef="let element">
+      <input type="button" value="Delete" (click)="onDelete(element._id)"></td>   
+  </ng-container>
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element">
+      <input type="button" value="Edit" (click)="onUpdate(element)"></td>   
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

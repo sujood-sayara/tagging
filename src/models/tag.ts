@@ -1,6 +1,6 @@
-export interface tag{
+export interface Tag{
     _id:string;
     tagName:string;
     tagColor:string;
-    data:Date;
+    date:Date;
    }

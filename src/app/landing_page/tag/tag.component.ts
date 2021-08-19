@@ -1,46 +1,39 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { TagsService } from 'src/app/services/tags.service';
-import { tag } from 'src/models/tag';
+import { Tag } from 'src/models/tag';
 import { Store } from '@ngrx/store';
 import { tagState } from 'src/app/reducers/tag.reducer';
 import { MatPaginator } from '@angular/material/paginator';
 import { AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import {
-  addTagAction,
-  deleteTagAction,
-  LoadTagAction,
-} from 'src/actions/tag.action';
+import { addTagAction, LoadTagAction } from 'src/actions/tag.action';
+import { updateDialog } from './updateTag_dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmationDialog } from 'src/app/shared/header/confirmation-dialog.component';
 @Component({
   selector: 'app-tag',
   templateUrl: './tag.component.html',
   styleUrls: ['./tag.component.css'],
 })
-export class TagComponent implements OnInit, OnDestroy,AfterViewInit {
+export class TagComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['tagname', 'tagcolor', 'delete'];
-  dataSource =new MatTableDataSource<tag>([])
+  displayedColumns: string[] = ['tagName', 'tagColor', 'delete', 'edit'];
+  dataSource = new MatTableDataSource<Tag>([]);
   tagSubcription: any;
-  
+  tagStore;
   constructor(
-    private tagservice: TagsService,
     public dialog: MatDialog,
-    private store: Store<tagState>
+    private store: Store<tagState>,
+    private snackBar: MatSnackBar
   ) {}
-  tagstore;
-  ngOnDestroy(): void {
-    this.tagSubcription.unsubscribe();
-  }
 
   ngOnInit(): void {
-    this.tagstore = this.store.select((store: any) => store.tag.loaded);
-    this.tagSubcription = this.tagstore.subscribe((data) => {
+    this.tagStore = this.store.select((store: any) => store.tag.loaded);
+    this.tagSubcription = this.tagStore.subscribe((data) => {
       if (!data) {
         this.store.dispatch(new LoadTagAction());
       }
@@ -49,21 +42,57 @@ export class TagComponent implements OnInit, OnDestroy,AfterViewInit {
     this.store
       .select((store: any) => store.tag.tags)
       .subscribe((data) => {
-        this.dataSource.data = data;
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
+        if (data !== undefined) {
+          this.dataSource.data = data;
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        }
       });
   }
-  openDialog() {
-    this.dialog.open(AddDialog);
-  }
-  onDelete(id) {
-    this.store.dispatch(new deleteTagAction(id));
-  }
+
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
+
+  ngOnDestroy(): void {
+    this.tagSubcription.unsubscribe();
+  }
+
+  openDialog() {
+    this.dialog.open(AddDialog);
+  }
+
+  onDelete(id) {
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      data: {
+        message: 'Are you sure want to delete?',
+        calledBy: 'tag.component',
+        elementId: id,
+        buttonText: {
+          ok: 'Save',
+          cancel: 'No',
+        },
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.snackBar.open('Delete done Successfully', 'x', {
+          duration: 2000,
+        });
+      }
+    });
+  }
+
+  onUpdate(tag) {
+    this.dialog.open(updateDialog, {
+      data: {
+        tag,
+      },
+    });
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -80,16 +109,16 @@ export class TagComponent implements OnInit, OnDestroy,AfterViewInit {
 })
 export class AddDialog {
   newTag = new FormGroup({
-    tagName: new FormControl(''),
-    tagColor: new FormControl(''),
+  tagName: new FormControl(''),
+  tagColor: new FormControl(''),
   });
-  data: tag;
   constructor(
-    private tagservice: TagsService,
-    private store: Store<tagState>
+    public dialogRef: MatDialogRef<AddDialog>,
+    private tagStore: Store<tagState>
   ) {}
 
   addTag() {
-    this.store.dispatch(new addTagAction(this.newTag.value));
+    this.tagStore.dispatch(new addTagAction(this.newTag.value));
+    this.dialogRef.close();
   }
 }

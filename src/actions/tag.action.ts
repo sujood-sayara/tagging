@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { tag } from 'src/models/tag';
+import { Tag } from 'src/models/tag';
 
 export enum tagsActionTypes {
   LOAD_tags = '[tags] Load tags',
@@ -8,10 +8,13 @@ export enum tagsActionTypes {
   LOAD_tgs_FAILURE = '[tags] Load tags Failure',
 
   ADD_tags = '[tags] add tags',
-  ADD_tags_Success ='[tags] add tags Success',
+  ADD_tags_Success = '[tags] add tags Success',
 
   DELETE_tags = '[tags] delete tags',
-  DELETE_tags_Success ='[tags] delete tags Success',
+  DELETE_tags_Success = '[tags] delete tags Success',
+
+  UPDATE_tags = '[tags] update tags',
+  UPDATE_tags_Success = '[tags] update tags Success',
 }
 
 export class LoadTagAction implements Action {
@@ -20,7 +23,7 @@ export class LoadTagAction implements Action {
 
 export class LoadTagSuccessAction implements Action {
   readonly type = tagsActionTypes.LOAD_tags_SUCCESS;
-  constructor(public payload: Array<tag>) {}
+  constructor(public payload: Array<Tag>) {}
 }
 
 export class LoadTagFailureAction implements Action {
@@ -30,12 +33,12 @@ export class LoadTagFailureAction implements Action {
 
 export class addTagAction implements Action {
   readonly type = tagsActionTypes.ADD_tags;
-  constructor(public payload: tag) {}
+  constructor(public payload: Tag) {}
 }
 
-export class AddTagSuccessAction implements Action{
-  readonly type = tagsActionTypes.ADD_tags_Success
-  constructor(public payload: tag) {}
+export class AddTagSuccessAction implements Action {
+  readonly type = tagsActionTypes.ADD_tags_Success;
+  constructor(public payload: Tag) {}
 }
 
 export class deleteTagAction implements Action {
@@ -43,9 +46,16 @@ export class deleteTagAction implements Action {
   constructor(public payload: string) {}
 }
 
-export class deleteTagSuccessAction implements Action{
-  readonly type = tagsActionTypes.DELETE_tags_Success
-  
+export class deleteTagSuccessAction implements Action {
+  readonly type = tagsActionTypes.DELETE_tags_Success;
+}
+export class updateTagAction implements Action {
+  readonly type = tagsActionTypes.UPDATE_tags;
+  constructor(public payload: Tag) {}
+}
+
+export class updateTagSuccessAction implements Action {
+  readonly type = tagsActionTypes.UPDATE_tags_Success;
 }
 
 export type tagAction =
@@ -55,4 +65,6 @@ export type tagAction =
   | addTagAction
   | AddTagSuccessAction
   | deleteTagSuccessAction
-  | deleteTagAction;
+  | deleteTagAction
+  | updateTagAction
+  | updateTagSuccessAction;

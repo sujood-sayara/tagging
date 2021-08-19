@@ -9,12 +9,11 @@ export enum imagesActionTypes {
   ADD_images = '[images] add images',
   ADD_images_Success = '[images] add images Success',
 
-
   DELETE_images = '[images] delete images',
-  DELETE_images_Success ='[images] delete images Success',
+  DELETE_images_Success = '[images] delete images Success',
 
   UPDATE_images = '[images] update images',
-  UPDATE_images_Success ='[images] update images Success',
+  UPDATE_images_Success = '[images] update images Success',
 }
 
 export class LoadImageAction implements Action {
@@ -44,18 +43,16 @@ export class deleteImageAction implements Action {
   constructor(public payload: string) {}
 }
 
-export class deleteImageSuccessAction implements Action{
-  readonly type = imagesActionTypes.DELETE_images_Success
-  
+export class deleteImageSuccessAction implements Action {
+  readonly type = imagesActionTypes.DELETE_images_Success;
 }
 export class updateImageAction implements Action {
   readonly type = imagesActionTypes.UPDATE_images;
-  constructor(public payload: Image ) {}
+  constructor(public payload: Image) {}
 }
 
-export class updateImageSuccessAction implements Action{
-  readonly type = imagesActionTypes.UPDATE_images_Success
-  
+export class updateImageSuccessAction implements Action {
+  readonly type = imagesActionTypes.UPDATE_images_Success;
 }
 
 export type imageAction =
