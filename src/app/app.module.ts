@@ -42,6 +42,7 @@ import { ButtonsModule, CardsModule } from 'angular-bootstrap-md'
 import { updateDialog } from './landing_page/tag/updateTag_dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ConfirmationDialog } from './shared/header/confirmation-dialog.component';
+import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { ConfirmationDialog } from './shared/header/confirmation-dialog.componen
     UpdateTagDialog,
     updateDialog,
     ConfirmationDialog,
+    ToolbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,6 +97,7 @@ import { ConfirmationDialog } from './shared/header/confirmation-dialog.componen
     ButtonsModule, 
     CardsModule,
     MatSnackBarModule,
+    MatToolbarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

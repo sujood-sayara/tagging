@@ -7,7 +7,11 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { deleteImageAction, LoadImageAction } from 'src/actions/image.action';
+import {
+  deleteImageAction,
+  LoadImageAction,
+  updateImageAction,
+} from 'src/actions/image.action';
 import { imageState } from 'src/app/reducers/image.reducer';
 import { tagState } from 'src/app/reducers/tag.reducer';
 import { ImagesService } from 'src/app/services/images.service';
@@ -20,6 +24,7 @@ import { UpdateTagDialog } from './updateImageDialog';
 import { Image } from 'src/models/image';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialog } from 'src/app/shared/header/confirmation-dialog.component';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main-page',
@@ -28,11 +33,15 @@ import { ConfirmationDialog } from 'src/app/shared/header/confirmation-dialog.co
 })
 export class MainPageComponent implements OnInit {
   datasource: Image[];
-  originalDate: [];
+  originalData: [];
   numberOfPages;
   tagsDetailes: any;
-  tags: Tag[];
+  tags$ = this.tagStore.select((store: any) => store.tag.tags);
+  tags: Tag[] = [];
   page = 0;
+  selectdTagValue;
+  originalTags;
+
   constructor(
     public dialog: MatDialog,
     private imageStore: Store<imageState>,
@@ -61,8 +70,8 @@ export class MainPageComponent implements OnInit {
       .select((store: any) => store.image.images)
       .subscribe((data) => {
         this.datasource = data;
-        this.originalDate = data;
-        if (this.originalDate !== undefined) {
+        this.originalData = data;
+        if (this.originalData !== undefined) {
           this.numberOfPages = Math.ceil(this.datasource.length / 6);
           this.slide(0);
         }
@@ -72,6 +81,7 @@ export class MainPageComponent implements OnInit {
       .select((store: any) => store.tag.tags)
       .subscribe((data) => {
         this.tags = data;
+        this.originalTags = this.tags;
       });
   }
 
@@ -117,7 +127,7 @@ export class MainPageComponent implements OnInit {
     });
   }
   slide(index) {
-    this.datasource = this.originalDate.slice(index * 6, index * 6 + 6);
+    this.datasource = this.originalData.slice(index * 6, index * 6 + 6);
   }
   nextPage() {
     if (this.page < this.numberOfPages - 1) this.page++;
@@ -128,5 +138,39 @@ export class MainPageComponent implements OnInit {
     if (this.page > 0) this.page--;
     else this.page = this.numberOfPages - 1;
     this.slide(this.page);
+  }
+  selectedTag(event) {
+    this.selectdTagValue = event;
+    console.log(event);
+  }
+  addTag(image: Image) {
+    if (
+      this.selectdTagValue !== undefined &&
+      image.tagIds.filter((tagid) => tagid === this.selectdTagValue._id)
+        .length === 0
+    ) {
+      const updatedTagIds = Object.values(image.tagIds);
+      updatedTagIds.unshift(this.selectdTagValue._id);
+      const updatedimage: Image = {
+        name: image.name,
+        id: image.id,
+        tagIds: updatedTagIds,
+        imageUrl: image.imageUrl,
+      };
+      this.imageStore.dispatch(new updateImageAction(updatedimage));
+      this.snackBar.open('tag added Successfully', 'x', {
+        duration: 2000,
+      });
+    }
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.tags$ = this.tags$.pipe(
+      map(() =>
+        this.originalTags.filter((tag) =>
+          tag.tagName.toLowerCase().includes(filterValue.toLowerCase())
+        )
+      )
+    );
   }
 }

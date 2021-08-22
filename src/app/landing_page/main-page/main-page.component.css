@@ -7,7 +7,7 @@
 
 }
 .buttondiv{
-    margin: 3rem auto;
+  margin: 3rem 15rem ;
     max-width: 660px;
     width: 100%;
     display: flex;
@@ -149,3 +149,12 @@
       text-align: center;
       display:block;
     }
+    .filter{
+      padding: .5rem;
+      width: 50%;
+      max-width: 600px;
+      box-sizing: border-box;
+      text-align: center;
+      margin-left: 30%;
+  
+  }
