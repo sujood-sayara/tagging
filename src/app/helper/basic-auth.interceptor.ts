@@ -4,8 +4,10 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, filter, take, switchMap } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { AuthenticationService } from '.././services/authentication.service';
@@ -13,7 +15,6 @@ import { AuthenticationService } from '.././services/authentication.service';
 @Injectable()
 export class BasicAuthInterceptor implements HttpInterceptor {
   constructor(private authenticationService: AuthenticationService) {}
-
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -25,7 +26,7 @@ export class BasicAuthInterceptor implements HttpInterceptor {
       if (isLoggedIn && isApiUrl) {
         request = request.clone({
           setHeaders: {
-            'auth-token': `${user}`,
+            jwt: `${user}`,
           },
         });
       }

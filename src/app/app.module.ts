@@ -20,7 +20,7 @@ import { MainPageComponent } from './landing_page/main-page/main-page.component'
 import { HeaderComponent } from './shared/header/header.component';
 import { TagComponent } from './landing_page/tag/tag.component';
 import { MatTableModule } from '@angular/material/table';
-import { MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { AddDialog } from './landing_page/tag/tag.component';
 import { EffectsModule } from '@ngrx/effects';
 import { reducertag } from './reducers/tag.reducer';
@@ -36,11 +36,11 @@ import { imageEffects } from './effects/image.effect';
 import { reducerimage } from './reducers/image.reducer';
 import { AddImageDialog } from './landing_page/main-page/addImageDialog';
 import { UpdateTagDialog } from './landing_page/main-page/updateImageDialog';
-import {MatSelectModule} from '@angular/material/select';
-import {CarouselModule, ModalModule, WavesModule } from 'angular-bootstrap-md'
-import { ButtonsModule, CardsModule } from 'angular-bootstrap-md'
+import { MatSelectModule } from '@angular/material/select';
+import { CarouselModule, ModalModule, WavesModule } from 'angular-bootstrap-md';
+import { ButtonsModule, CardsModule } from 'angular-bootstrap-md';
 import { updateDialog } from './landing_page/tag/updateTag_dialog';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ConfirmationDialog } from './shared/header/confirmation-dialog.component';
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 
@@ -90,14 +90,14 @@ import { ToolbarComponent } from './shared/toolbar/toolbar.component';
     MatToolbarModule,
     MatButtonModule,
     FlexLayoutModule,
-    MatSelectModule, 
+    MatSelectModule,
     CarouselModule.forRoot(),
     ModalModule.forRoot(),
     WavesModule.forRoot(),
-    ButtonsModule, 
+    ButtonsModule,
     CardsModule,
     MatSnackBarModule,
-    MatToolbarModule
+    MatToolbarModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

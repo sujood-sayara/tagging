@@ -15,10 +15,13 @@ export class TagsService {
   addTag(body) {
     return this.httpClient.post<any>(`${environment.apiUrl}/tags`, body);
   }
-  deleteTag(id:string){
+  deleteTag(id: string) {
     return this.httpClient.delete(`${environment.apiUrl}/tags/${id}`);
   }
-  updateTag(updatedTag:Tag):Observable<any>{
-    return this.httpClient.put<Tag>(`${environment.apiUrl}/tags/${updatedTag._id}`,updatedTag);
+  updateTag(updatedTag: Tag): Observable<any> {
+    return this.httpClient.put<Tag>(
+      `${environment.apiUrl}/tags/${updatedTag._id}`,
+      updatedTag
+    );
   }
 }

@@ -37,9 +37,9 @@ export class AddImageDialog {
     this.addForm.get('image').updateValueAndValidity();
   }
 
-  submitForm(){
-    if(this.addForm.controls.tagIds.value===null)
-    this.addForm.controls.tagIds.setValue('[]')
+  submitForm() {
+    if (this.addForm.controls.tagIds.value === null)
+      this.addForm.controls.tagIds.setValue('[]');
     this.imagestore.dispatch(new AddImageAction(this.addForm.value));
     this.dialogRef.close();
   }

@@ -109,8 +109,8 @@ export class TagComponent implements OnInit, OnDestroy, AfterViewInit {
 })
 export class AddDialog {
   newTag = new FormGroup({
-  tagName: new FormControl(''),
-  tagColor: new FormControl(''),
+    tagName: new FormControl(''),
+    tagColor: new FormControl(''),
   });
   constructor(
     public dialogRef: MatDialogRef<AddDialog>,

@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    localStorage.setItem('jwt', null);
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
   onSubmit() {
@@ -37,7 +36,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['home']);
         },
         (error) => {
-          localStorage.setItem('jwt', JSON.stringify(null));
+          localStorage.removeItem('jwt');
           this.router.navigate(['login']); //Error callback
         }
       );

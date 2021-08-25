@@ -9,10 +9,15 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { AuthenticationService } from '..//services/authentication.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -22,6 +27,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((err) => {
         if (err.status === 401) {
           this.authenticationService.logout();
+          this.router.navigate(['login']); //Error callback
         }
 
         const error = err.error.message || err.statusText;

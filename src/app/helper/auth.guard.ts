@@ -12,18 +12,18 @@ import { AuthenticationService } from '../services/authentication.service';
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService,
-    
+    private authenticationService: AuthenticationService
   ) {}
   loggedin: boolean;
   auth_token: string;
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     this.auth_token = localStorage.getItem('jwt');
+
     if (this.auth_token.toString() == 'null') {
       alert(
         'You are not allowed to view this page. You are redirected to login Page'
       );
-      this.router.navigate(['login']);
+      this.router.navigate(['home']);
       return false;
     }
     return true;
