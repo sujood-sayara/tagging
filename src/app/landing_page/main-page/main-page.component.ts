@@ -32,7 +32,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./main-page.component.css'],
 })
 export class MainPageComponent implements OnInit {
-  datasource: Image[];
+  datasource: Image[]; // lower camel case
   originalData: [];
   numberOfPages;
   tagsDetailes: any;
@@ -47,12 +47,12 @@ export class MainPageComponent implements OnInit {
     private imageStore: Store<imageState>,
     private tagStore: Store<tagState>,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.tagStore
       .select((store: any) => store.tag.loaded)
-      .subscribe((data) => {
+      .subscribe((data) => { // change data to isLoaded for better readability
         if (!data) {
           this.tagStore.dispatch(new LoadTagAction());
         }
@@ -60,7 +60,7 @@ export class MainPageComponent implements OnInit {
     const loadImage = this.imageStore.select(
       (store: any) => store.image.loaded
     );
-    loadImage.subscribe((data) => {
+    loadImage.subscribe((data) => { // same as above also you can just subscribe to the select statement 
       if (!data) {
         this.imageStore.dispatch(new LoadImageAction());
       }
@@ -83,6 +83,14 @@ export class MainPageComponent implements OnInit {
         this.tags = data;
         this.originalTags = this.tags;
       });
+
+    /* 
+     
+      instead of using getImageTags function to build a relation between tags and images, we can use combine latest on
+      store and build the object we need inside a mergeMap or map, this way we dont have function calls from the html
+      any store changes will be reflected on either images or tags
+    
+    */
   }
 
   openAddDialog() {
@@ -93,7 +101,7 @@ export class MainPageComponent implements OnInit {
     const imageTags = [];
     if (image.tagIds !== null) {
       image.tagIds.forEach((element) => {
-        imageTags.unshift(this.tags.filter((input) => input._id === element));
+        imageTags.unshift(this.tags.filter((input) => input._id === element)); // instead of filter we can use find 
       });
     }
     return imageTags;
@@ -146,7 +154,7 @@ export class MainPageComponent implements OnInit {
   addTag(image: Image) {
     if (
       this.selectdTagValue !== undefined &&
-      image.tagIds.filter((tagid) => tagid === this.selectdTagValue._id)
+      image.tagIds.filter((tagid) => tagid === this.selectdTagValue._id) // used find instead of filter here as well
         .length === 0
     ) {
       const updatedTagIds = Object.values(image.tagIds);
@@ -158,10 +166,11 @@ export class MainPageComponent implements OnInit {
         imageUrl: image.imageUrl,
       };
       this.imageStore.dispatch(new updateImageAction(updatedimage));
-      this.snackBar.open('tag added Successfully', 'x', {
+      this.snackBar.open('tag added Successfully', 'x', { // apply better capitalization "Tag added successfully"
         duration: 2000,
       });
     }
+    // if the tag already exists, use the snack bar to display this info to the user
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

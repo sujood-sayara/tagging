@@ -13,6 +13,9 @@ import { Tag } from 'src/models/tag';
   styleUrls: ['./add.image.dialog.css'],
 })
 export class AddImageDialog {
+
+    // add the dialogs to thier own folders and in the future use angular cli to add them or follow naming convention add-image-dialog.component
+
   tags: Tag[];
   tagStore = this.store
     .select((store: any) => store.tag.tags)
@@ -22,7 +25,7 @@ export class AddImageDialog {
     public fb: FormBuilder,
     private store: Store<tagState>,
     private imagestore: Store<imageState>
-  ) {}
+  ) { }
   addForm = this.fb.group({
     name: '',
     tagIds: [],
@@ -38,7 +41,7 @@ export class AddImageDialog {
   }
 
   submitForm() {
-    if (this.addForm.controls.tagIds.value === null)
+    if (this.addForm.controls.tagIds.value === null) // use curly brackets even if the if statement has one line of execution
       this.addForm.controls.tagIds.setValue('[]');
     this.imagestore.dispatch(new AddImageAction(this.addForm.value));
     this.dialogRef.close();

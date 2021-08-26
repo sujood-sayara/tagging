@@ -18,7 +18,7 @@ import { TagsService } from '../services/tags.service';
 
 @Injectable()
 export class tagEffects {
-  @Effect()
+  @Effect() // change to create effect over effect
   loadtags$ = this.actions$.pipe(
     ofType<LoadTagAction>(tagsActionTypes.LOAD_tags),
     mergeMap(() =>
@@ -55,7 +55,7 @@ export class tagEffects {
     this.actions$.pipe(
       ofType(tagsActionTypes.UPDATE_tags),
       map((action: updateTagAction) => action.payload),
-      switchMap((tag) => this.tagservice.updateTag(tag)),
+      switchMap((tag) => this.tagservice.updateTag(tag)), // mergeMap over switchMap
       map(() => {
         return new updateTagSuccessAction();
       })

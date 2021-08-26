@@ -9,14 +9,14 @@ import { AuthenticationService } from '..//services/authentication.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  returnUrl!: string;
-  hide = true;
+  returnUrl!: string; // unused / remove it
+  hide = true; // unused / remove it
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService
-  ) {}
-  loginForm = new FormGroup({
+  ) { }
+  loginForm = new FormGroup({  // use form builder instead
     username: new FormControl(''),
     password: new FormControl(''),
   });

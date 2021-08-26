@@ -18,7 +18,7 @@ import { ImagesService } from '../services/images.service';
 
 @Injectable()
 export class imageEffects {
-  @Effect()
+  @Effect()  // change to create effect over effect
   loadImages$ = this.actions$.pipe(
     ofType<LoadImageAction>(imagesActionTypes.LOAD_images),
     mergeMap(() =>
@@ -56,11 +56,11 @@ export class imageEffects {
     this.actions$.pipe(
       ofType(imagesActionTypes.UPDATE_images),
       map((action: updateImageAction) => action.payload),
-      switchMap((image) => this.imageservice.updateImage(image)),
+      switchMap((image) => this.imageservice.updateImage(image)), //mergeMap over switchMap
       map(() => {
         return new updateImageSuccessAction();
       })
     )
   );
-  constructor(private actions$: Actions, private imageservice: ImagesService) {}
+  constructor(private actions$: Actions, private imageservice: ImagesService) { }
 }

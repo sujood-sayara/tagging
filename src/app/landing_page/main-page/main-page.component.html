@@ -6,7 +6,7 @@
 <div style="margin-bottom: 20px;">
   <mat-form-field class="filter" appearance="standard">
     <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" #input>
+    <input matInput (keyup)="applyFilter($event)" #input> <!-- change to form control and use value changes -->
   </mat-form-field>
   <app-toolbar [tags$]="tags$" (selectedTag)="selectedTag($event)">
   </app-toolbar>

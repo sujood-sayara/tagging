@@ -18,21 +18,23 @@ import { Tag } from 'src/models/tag';
   styleUrls: ['./update.image.dialog.css'],
 })
 export class UpdateTagDialog {
+
+  // add the dialogs to thier own folders and in the future use angular cli to add them or follow naming convention update-image-dialog.component
   imageTags = new FormControl();
   imageName = new FormControl();
   tags: Tag[];
 
   tagStore = this.store
     .select((store: any) => store.tag.tags)
-    .subscribe((data) => (this.tags = data));
+    .subscribe((data) => (this.tags = data)); // dont subscribe to data here, use ngOnInit
 
   constructor(
     public dialogRef: MatDialogRef<UpdateTagDialog>,
     private store: Store<tagState>,
     private imageStore: Store<imageState>,
-    private readonly dialog: MatDialog,
+    private readonly dialog: MatDialog, // unused / remove
     @Inject(MAT_DIALOG_DATA) public imageinfo: any
-  ) {}
+  ) { }
 
   UpdateImage(id, imageurl) {
     const image: Image = {

@@ -14,7 +14,7 @@ export class ToolbarComponent implements OnInit {
   originalTags: Tag[] = [];
   numberOfPages;
   page = 0;
-  selectedName: any;
+  selectedName: any; //selectedTagName over selectedName
   constructor() {}
 
   ngOnInit(): void {
@@ -25,7 +25,7 @@ export class ToolbarComponent implements OnInit {
         this.slide(0);
       }
     });
-    this.selectedName = null;
+    this.selectedName = null; 
   }
   selectdTagValue(tag) {
     this.selectedName = tag.tagName;

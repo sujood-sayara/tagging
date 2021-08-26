@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
 
     if (this.auth_token.toString() == 'null') {
       alert(
-        'You are not allowed to view this page. You are redirected to login Page'
+        'You are not allowed to view this page. You are redirected to login Page' // dont use alerts use a dialog
       );
       this.router.navigate(['home']);
       return false;

@@ -1,6 +1,10 @@
 <mat-toolbar>
   <label style="font-size:30px;color: blueviolet;" (click)='prePage();'> &lt;&lt; </label>
+
+  <!-- use ngClass over style.background-color -->
   <span [style.background-color]="tag.tagName === selectedName ? '#970497' : ''" class="example-spacer" *ngFor="let tag of tags$ | async" (click)="selectdTagValue(tag)">{{tag.tagName}}</span>
+  
+  
   <label style="font-size:30px;color: blueviolet;" (click)='nextPage();'>>></label>
   <button (click)='clear()'> clear selection</button>
  

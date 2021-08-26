@@ -29,7 +29,7 @@ export class TagComponent implements OnInit, OnDestroy, AfterViewInit {
     public dialog: MatDialog,
     private store: Store<tagState>,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.tagStore = this.store.select((store: any) => store.tag.loaded);
@@ -108,6 +108,9 @@ export class TagComponent implements OnInit, OnDestroy, AfterViewInit {
   styleUrls: ['./dialog.add.css'],
 })
 export class AddDialog {
+
+  //seperate dialog files also name conventions
+
   newTag = new FormGroup({
     tagName: new FormControl(''),
     tagColor: new FormControl(''),
@@ -115,7 +118,7 @@ export class AddDialog {
   constructor(
     public dialogRef: MatDialogRef<AddDialog>,
     private tagStore: Store<tagState>
-  ) {}
+  ) { }
 
   addTag() {
     this.tagStore.dispatch(new addTagAction(this.newTag.value));

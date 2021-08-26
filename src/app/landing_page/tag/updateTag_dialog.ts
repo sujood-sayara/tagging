@@ -11,7 +11,9 @@ import { tagState } from 'src/app/reducers/tag.reducer';
   styleUrls: ['./dialog.update.css'],
 })
 export class updateDialog {
-  updatedTag = new FormGroup({
+
+  //seperate dialog files also name conventions
+  updatedTag = new FormGroup({ // use form builder instead
     tagName: new FormControl(this.taginfo.tag.tagName),
     tagColor: new FormControl(this.taginfo.tag.tagColor),
   });
@@ -20,7 +22,7 @@ export class updateDialog {
     public dialogRef: MatDialogRef<updateDialog>,
     private tagStore: Store<tagState>,
     @Inject(MAT_DIALOG_DATA) public taginfo: any
-  ) {}
+  ) { }
 
   updateTag() {
     const tag = {
