@@ -5,11 +5,13 @@ import * as _ from 'lodash';
 
 export interface tagState {
   tags: Tag[];
+
   loaded: boolean;
 }
 
 const initialState: tagState = {
   tags: [],
+
   loaded: false,
 };
 
@@ -42,11 +44,12 @@ export function reducertag(state: tagState = initialState, action: tagAction) {
     case tagsActionTypes.DELETE_tags:
       return {
         ...state,
-        tags: [...state.tags.filter((tag) => tag._id !== action.payload)],
       };
+
     case tagsActionTypes.DELETE_tags_Success:
       return {
         ...state,
+        tags: [...state.tags.filter((tag) => tag._id !== action.payload)],
       };
     case tagsActionTypes.UPDATE_tags:
       const stateCopy = _.cloneDeep(state);
@@ -58,7 +61,6 @@ export function reducertag(state: tagState = initialState, action: tagAction) {
 
       return {
         stateCopy,
-        //images: [...state.images.filter((image) => image.id !== action.id),],
       };
     case tagsActionTypes.UPDATE_tags_Success:
       return {

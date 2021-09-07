@@ -16,7 +16,9 @@ export class TagsService {
     return this.httpClient.post<any>(`${environment.apiUrl}/tags`, body);
   }
   deleteTag(id: string) {
-    return this.httpClient.delete(`${environment.apiUrl}/tags/${id}`);
+    return this.httpClient.delete(`${environment.apiUrl}/tags/${id}`, {
+      observe: 'response',
+    });
   }
   updateTag(updatedTag: Tag): Observable<any> {
     return this.httpClient.put<Tag>(

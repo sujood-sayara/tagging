@@ -10,6 +10,7 @@ export interface imageState {
 
 const initialState: imageState = {
   images: [],
+
   loaded: false,
 };
 
@@ -25,9 +26,32 @@ export function reducerimage(
     case imagesActionTypes.LOAD_images_SUCCESS:
       return {
         ...state,
-        images: [...action.payload],
+        images: [
+          ...action.payload.map((image) => ({ ...image, comments: [] })),
+        ],
         loaded: true,
       };
+    // case imagesActionTypes.LOAD_comments:
+    //   return {
+    //     ...state,
+    //   };
+    // case imagesActionTypes.LOAD_comments_SUCCESS:
+    //   let newImage=state.images.find((image) => image.id === action.imageId)
+    //   action.payload.map(comment=>
+    //     newImage.comments.push(comment)
+    //     )
+    //   let indexxx = state.images.findIndex(
+    //     (image) => image.id === action.imageId
+    //   );
+    //  // let newImage=state.images[indexxx]
+
+    //   const newState=state.images.filter(image=>image.id!==action.imageId)
+    //  newState.push(newImage)
+    //   return {
+    //     ...state,
+    //     images:{...newState},
+
+    //   };
 
     case imagesActionTypes.LOAD_images_FAILURE:
       return {

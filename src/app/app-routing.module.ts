@@ -5,8 +5,9 @@ import { RegisterComponent } from './register/register.component';
 import { MainPageComponent } from './landing_page/main-page/main-page.component';
 import { AuthGuard } from './helper/auth.guard';
 import { TagComponent } from './landing_page/tag/tag.component';
+
 export const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: MainPageComponent, canActivate: [AuthGuard] },

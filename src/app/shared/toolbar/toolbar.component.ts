@@ -1,23 +1,32 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { map } from 'rxjs/operators';
 import { Tag } from 'src/models/tag';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css'],
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements OnInit, OnChanges {
   @Input() tags$;
   @Output() selectedTag = new EventEmitter();
   originalTags: Tag[] = [];
   numberOfPages;
   page = 0;
-  selectedName: any;
+  selectedTagName: any;
+  isSelected = false;
   constructor() {}
-
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.tags$.subscribe((data) => {
       this.originalTags = data;
       if (this.originalTags !== undefined) {
@@ -25,14 +34,16 @@ export class ToolbarComponent implements OnInit {
         this.slide(0);
       }
     });
-    this.selectedName = null;
+    this.selectedTagName = null;
   }
+
+  ngOnInit(): void {}
   selectdTagValue(tag) {
-    this.selectedName = tag.tagName;
+    this.selectedTagName = tag.tagName;
     this.selectedTag.emit(tag);
   }
   clear() {
-    this.selectedName = null;
+    this.selectedTagName = null;
     this.selectedTag.emit(undefined);
   }
   slide(index) {
@@ -49,5 +60,16 @@ export class ToolbarComponent implements OnInit {
     if (this.page > 0) this.page--;
     else this.page = this.numberOfPages - 1;
     this.slide(this.page);
+  }
+  calculateClasses(tag) {
+    if (tag.tagName === this.selectedTagName) {
+      this.isSelected = true;
+    } else {
+      this.isSelected = false;
+    }
+
+    return {
+      selectedSpan: this.isSelected,
+    };
   }
 }

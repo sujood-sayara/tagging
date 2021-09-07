@@ -21,7 +21,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { TagComponent } from './landing_page/tag/tag.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
-import { AddDialog } from './landing_page/tag/tag.component';
+import { AddDialog } from './dialogs/addTag/add-tag-dialog.component';
 import { EffectsModule } from '@ngrx/effects';
 import { reducertag } from './reducers/tag.reducer';
 import { tagEffects } from './effects/tag.effect';
@@ -34,15 +34,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { imageEffects } from './effects/image.effect';
 import { reducerimage } from './reducers/image.reducer';
-import { AddImageDialog } from './landing_page/main-page/addImageDialog';
-import { UpdateTagDialog } from './landing_page/main-page/updateImageDialog';
+import { AddImageDialog } from './dialogs/addImage/add-image-dialog.component';
+import { UpdateImageDialog } from './dialogs/updateImage/update-image-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
 import { CarouselModule, ModalModule, WavesModule } from 'angular-bootstrap-md';
 import { ButtonsModule, CardsModule } from 'angular-bootstrap-md';
-import { updateDialog } from './landing_page/tag/updateTag_dialog';
+import { updateDialog } from './dialogs/updateTag/update-tag-dialog.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ConfirmationDialog } from './shared/header/confirmation-dialog.component';
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
+import { AuthenticationDialogComponent } from './dialogs/authentication-dialog/authentication-dialog.component';
+import { reducerComment } from './reducers/comment.reducer';
+import { commentEffects } from './effects/comment.effect';
+import { CommentDialogComponent } from './dialogs/comment-dialog/comment-dialog.component';
 
 @NgModule({
   declarations: [
@@ -54,10 +58,13 @@ import { ToolbarComponent } from './shared/toolbar/toolbar.component';
     TagComponent,
     AddDialog,
     AddImageDialog,
-    UpdateTagDialog,
+    UpdateImageDialog,
     updateDialog,
     ConfirmationDialog,
     ToolbarComponent,
+    AuthenticationDialogComponent,
+    CommentDialogComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -84,8 +91,8 @@ import { ToolbarComponent } from './shared/toolbar/toolbar.component';
     MatInputModule,
     MatFormFieldModule,
     RouterModule.forRoot(routes),
-    StoreModule.forRoot({ tag: reducertag, image: reducerimage }),
-    EffectsModule.forRoot([tagEffects, imageEffects]),
+    StoreModule.forRoot({ tag: reducertag, image: reducerimage ,comment: reducerComment}),
+    EffectsModule.forRoot([tagEffects, imageEffects,commentEffects]),
     MatCardModule,
     MatToolbarModule,
     MatButtonModule,

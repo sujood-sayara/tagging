@@ -15,6 +15,7 @@ export enum tagsActionTypes {
 
   UPDATE_tags = '[tags] update tags',
   UPDATE_tags_Success = '[tags] update tags Success',
+  DELETE_tags_Failed = '[tags] delete tags Failed',
 }
 
 export class LoadTagAction implements Action {
@@ -48,6 +49,7 @@ export class deleteTagAction implements Action {
 
 export class deleteTagSuccessAction implements Action {
   readonly type = tagsActionTypes.DELETE_tags_Success;
+  constructor(public payload: string) {}
 }
 export class updateTagAction implements Action {
   readonly type = tagsActionTypes.UPDATE_tags;
@@ -56,6 +58,10 @@ export class updateTagAction implements Action {
 
 export class updateTagSuccessAction implements Action {
   readonly type = tagsActionTypes.UPDATE_tags_Success;
+}
+
+export class failedToDeleteTagAction implements Action {
+  readonly type = tagsActionTypes.DELETE_tags_Failed;
 }
 
 export type tagAction =
@@ -67,4 +73,5 @@ export type tagAction =
   | deleteTagSuccessAction
   | deleteTagAction
   | updateTagAction
-  | updateTagSuccessAction;
+  | updateTagSuccessAction
+  | failedToDeleteTagAction;

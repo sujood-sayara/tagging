@@ -10,7 +10,9 @@ import { Observable } from 'rxjs';
 export class ImagesService {
   constructor(private httpClient: HttpClient) {}
   getImages() {
-    return this.httpClient.get<Image[]>(`${environment.apiUrl}/images`);
+    return this.httpClient.get<Image[]>(`${environment.apiUrl}/images`, {
+      observe: 'response',
+    });
   }
   addImage(form) {
     var formData: any = new FormData();

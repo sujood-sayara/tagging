@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Update Image information</h1>
+<img src="{{imageinfo.image.imageUrl}}" width="100" height="100">
+<div mat-dialog-content>
+  <label>Image name</label><br><br>
+  <input type="text" placeholder="{{imageinfo.image.name}}" id="imageName" [formControl]="imageName"><br><br>
+  <mat-form-field appearance="fill">
+    <mat-label>Tags</mat-label>
+    <mat-select [formControl]="imageTags" multiple>
+      <mat-select-trigger>
+        {{imageTags.value ? imageTags.value[0] : ''}}
+        <span *ngIf="imageTags.value?.length > 1" class="example-additional-selection">
+          (+{{imageTags.value.length - 1}} {{imageTags.value?.length === 2 ? 'other' : 'others'}})
+        </span>
+      </mat-select-trigger>
+      <mat-option *ngFor="let tag of tags" [value]="tag._id" style="background-color: {{tag.tagColor}};">{{tag.tagName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="UpdateImage(imageinfo.image.id,imageinfo.image.imageUrl)">save </button>
+  <button mat-button mat-dialog-close>Close</button>
+</div>

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import {
   MatDialog,
@@ -14,31 +14,34 @@ import { Tag } from 'src/models/tag';
 
 @Component({
   selector: 'dialog-update_image',
-  templateUrl: 'update-image-dialog.html',
-  styleUrls: ['./update.image.dialog.css'],
+  templateUrl: 'update-image-dialog.component.html',
+  styleUrls: ['./update-image-dialog.component.css'],
 })
-export class UpdateTagDialog {
+export class UpdateImageDialog implements OnInit {
   imageTags = new FormControl();
   imageName = new FormControl();
   tags: Tag[];
 
-  tagStore = this.store
-    .select((store: any) => store.tag.tags)
-    .subscribe((data) => (this.tags = data));
-
   constructor(
-    public dialogRef: MatDialogRef<UpdateTagDialog>,
+    public dialogRef: MatDialogRef<UpdateImageDialog>,
     private store: Store<tagState>,
     private imageStore: Store<imageState>,
-    private readonly dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public imageinfo: any
   ) {}
+  ngOnInit(): void {
+    this.store
+      .select((store: any) => store.tag.tags)
+      .subscribe((data) => (this.tags = data));
+  }
 
   UpdateImage(id, imageurl) {
+    let tagsIDs;
+    if (this.imageTags.value === null) tagsIDs = [];
+    else tagsIDs = this.imageTags.value;
     const image: Image = {
       name: this.imageName.value,
       id: id,
-      tagIds: this.imageTags.value,
+      tagIds: tagsIDs,
       imageUrl: imageurl,
     };
     this.imageStore.dispatch(new updateImageAction(image));

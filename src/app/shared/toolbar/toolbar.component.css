@@ -1,3 +1,24 @@
-.example-spacer {
-    flex:0.2 0.2 auto;
+  .selectedSpan{
+    background-color:#970497 ;
   }
+  .flexr {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .center {
+    display: flex;
+    justify-content: center;
+  }
+  .flexc {
+    display: flex;
+    flex-direction: column;
+  }
+button{
+  width: 200px;
+  height: 30px;
+}  
+.example-spacer {
+  flex: 1 1 auto;
+}

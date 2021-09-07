@@ -12,21 +12,24 @@ import {
   deleteTagAction,
   updateTagAction,
   updateTagSuccessAction,
+  failedToDeleteTagAction,
 } from 'src/actions/tag.action';
 import { of } from 'rxjs';
 import { TagsService } from '../services/tags.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class tagEffects {
-  @Effect()
-  loadtags$ = this.actions$.pipe(
-    ofType<LoadTagAction>(tagsActionTypes.LOAD_tags),
-    mergeMap(() =>
-      this.tagservice.getTags().pipe(
-        map((data) => {
-          return new LoadTagSuccessAction(data);
-        }),
-        catchError((error) => of(new LoadTagFailureAction(error)))
+  loadtags$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType<LoadTagAction>(tagsActionTypes.LOAD_tags),
+      mergeMap(() =>
+        this.tagservice.getTags().pipe(
+          map((data) => {
+            return new LoadTagSuccessAction(data);
+          }),
+          catchError((error) => of(new LoadTagFailureAction(error)))
+        )
       )
     )
   );
@@ -46,8 +49,17 @@ export class tagEffects {
       ofType(tagsActionTypes.DELETE_tags),
       map((action: deleteTagAction) => action.payload),
       switchMap((tagId) => this.tagservice.deleteTag(tagId)),
-      map(() => {
-        return new deleteTagSuccessAction();
+      map((data: any) => {
+        this.snackBar.open('Delete done Successfully', 'x', {
+          duration: 2000,
+        });
+        return new deleteTagSuccessAction(data.body['id']);
+      }),
+      catchError((err) => {
+        this.snackBar.open('Could not delete tag', 'x', {
+          duration: 2000,
+        });
+        return of(new failedToDeleteTagAction());
       })
     )
   );
@@ -55,12 +67,16 @@ export class tagEffects {
     this.actions$.pipe(
       ofType(tagsActionTypes.UPDATE_tags),
       map((action: updateTagAction) => action.payload),
-      switchMap((tag) => this.tagservice.updateTag(tag)),
+      mergeMap((tag) => this.tagservice.updateTag(tag)),
       map(() => {
         return new updateTagSuccessAction();
       })
     )
   );
 
-  constructor(private actions$: Actions, private tagservice: TagsService) {}
+  constructor(
+    private actions$: Actions,
+    private tagservice: TagsService,
+    private snackBar: MatSnackBar
+  ) {}
 }

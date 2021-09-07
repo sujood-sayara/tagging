@@ -1,7 +1,6 @@
-
-export interface Image{
-    id:string;
-    name:string;
-    tagIds:string[];
-    imageUrl:string
-   }
+export interface Image {
+  id: string;
+  name: string;
+  tagIds: string[];
+  imageUrl: string;
+}

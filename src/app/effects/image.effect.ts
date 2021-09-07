@@ -8,6 +8,9 @@ import {
   deleteImageAction,
   deleteImageSuccessAction,
   imagesActionTypes,
+  LoadCammentFailureAction,
+  LoadCommentAction,
+  LoadCommentSuccessAction,
   LoadImageAction,
   LoadImageFailureAction,
   LoadImageSuccessAction,
@@ -15,18 +18,21 @@ import {
   updateImageSuccessAction,
 } from 'src/actions/image.action';
 import { ImagesService } from '../services/images.service';
+import { CommentsService } from '../services/comments.service';
+import { Comment } from 'src/models/comment';
 
 @Injectable()
 export class imageEffects {
-  @Effect()
-  loadImages$ = this.actions$.pipe(
-    ofType<LoadImageAction>(imagesActionTypes.LOAD_images),
-    mergeMap(() =>
-      this.imageservice.getImages().pipe(
-        map((data) => {
-          return new LoadImageSuccessAction(data['images']);
-        }),
-        catchError((error) => of(new LoadImageFailureAction(error)))
+  loadImages$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType<LoadImageAction>(imagesActionTypes.LOAD_images),
+      mergeMap(() =>
+        this.imageservice.getImages().pipe(
+          map((data: any) => {
+            return new LoadImageSuccessAction(data.body['images']);
+          }),
+          catchError((error) => of(new LoadImageFailureAction(error)))
+        )
       )
     )
   );
@@ -56,11 +62,16 @@ export class imageEffects {
     this.actions$.pipe(
       ofType(imagesActionTypes.UPDATE_images),
       map((action: updateImageAction) => action.payload),
-      switchMap((image) => this.imageservice.updateImage(image)),
+      mergeMap((image) => this.imageservice.updateImage(image)),
       map(() => {
         return new updateImageSuccessAction();
       })
     )
   );
-  constructor(private actions$: Actions, private imageservice: ImagesService) {}
+
+  constructor(
+    private actions$: Actions,
+    private imageservice: ImagesService,
+    private commmentservice: CommentsService
+  ) {}
 }

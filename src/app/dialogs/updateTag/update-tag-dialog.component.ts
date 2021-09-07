@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { updateTagAction } from 'src/actions/tag.action';
@@ -7,18 +7,19 @@ import { tagState } from 'src/app/reducers/tag.reducer';
 
 @Component({
   selector: 'dialog-update',
-  templateUrl: 'dialog-update.html',
-  styleUrls: ['./dialog.update.css'],
+  templateUrl: 'update-tag-dialog.component.html',
+  styleUrls: ['./update-tag-dialog.component.css'],
 })
 export class updateDialog {
-  updatedTag = new FormGroup({
-    tagName: new FormControl(this.taginfo.tag.tagName),
-    tagColor: new FormControl(this.taginfo.tag.tagColor),
+  updatedTag = this.fb.group({
+    tagName: this.taginfo.tag.tagName,
+    tagColor: this.taginfo.tag.tagColor,
   });
 
   constructor(
     public dialogRef: MatDialogRef<updateDialog>,
     private tagStore: Store<tagState>,
+    public fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public taginfo: any
   ) {}
 

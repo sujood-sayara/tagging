@@ -17,96 +17,113 @@ import { tagState } from 'src/app/reducers/tag.reducer';
 import { ImagesService } from 'src/app/services/images.service';
 import 'lodash';
 import * as _ from 'lodash';
-import { AddImageDialog } from './addImageDialog';
+import { AddImageDialog } from '../../dialogs/addImage/add-image-dialog.component';
 import { Tag } from 'src/models/tag';
 import { LoadTagAction } from 'src/actions/tag.action';
-import { UpdateTagDialog } from './updateImageDialog';
+import { UpdateImageDialog } from '../../dialogs/updateImage/update-image-dialog.component';
 import { Image } from 'src/models/image';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialog } from 'src/app/shared/header/confirmation-dialog.component';
-import { map } from 'rxjs/operators';
-
+import { map, mergeMap } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+import { observable, of } from 'rxjs';
+import { combineLatest } from 'rxjs';
+import { find } from 'lodash';
+import { Router } from '@angular/router';
+import { CommentsService } from 'src/app/services/comments.service';
+import { CommentDialogComponent } from 'src/app/dialogs/comment-dialog/comment-dialog.component';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.css'],
 })
 export class MainPageComponent implements OnInit {
-  datasource: Image[];
-  originalData: [];
+  filterInput = new FormControl('');
+  dataSource: any[];
+  originalData: any[];
   numberOfPages;
-  tagsDetailes: any;
-  tags$ = this.tagStore.select((store: any) => store.tag.tags);
-  tags: Tag[] = [];
   page = 0;
+  tags$;
   selectdTagValue;
   originalTags;
+  originalImages: any;
 
   constructor(
     public dialog: MatDialog,
     private imageStore: Store<imageState>,
     private tagStore: Store<tagState>,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private commentService: CommentsService
   ) {}
 
   ngOnInit(): void {
+    this.tags$ = this.tagStore.select((store: any) => store.tag.tags);
     this.tagStore
       .select((store: any) => store.tag.loaded)
-      .subscribe((data) => {
-        if (!data) {
+      .subscribe((isLoaded) => {
+        if (!isLoaded) {
           this.tagStore.dispatch(new LoadTagAction());
         }
       });
-    const loadImage = this.imageStore.select(
-      (store: any) => store.image.loaded
-    );
-    loadImage.subscribe((data) => {
-      if (!data) {
-        this.imageStore.dispatch(new LoadImageAction());
-      }
-    });
-
     this.imageStore
-      .select((store: any) => store.image.images)
-      .subscribe((data) => {
-        this.datasource = data;
-        this.originalData = data;
-        if (this.originalData !== undefined) {
-          this.numberOfPages = Math.ceil(this.datasource.length / 6);
+      .select((store: any) => store.image.loaded)
+      .subscribe((isLoaded) => {
+        if (!isLoaded) {
+          this.imageStore.dispatch(new LoadImageAction());
+        }
+      });
+
+    const joinStream = combineLatest([
+      this.imageStore.select((store: any) => store.image.images),
+      this.tagStore.select((store: any) => store.tag.tags),
+    ])
+      .pipe(
+        mergeMap(([images, tags]) => {
+          this.originalTags = tags;
+          this.originalImages = images;
+          let imageTags = [];
+          if (images?.length !== 0 && tags?.length !== 0) {
+            imageTags = images?.map((image: Image) => ({
+              id: image.id,
+              name: image.name,
+              imageUrl: image.imageUrl,
+              tags: tags?.filter((tag: Tag) =>
+                image?.tagIds?.find((id) => id === tag._id)
+              ),
+            }));
+          }
+          return of(imageTags);
+        })
+      )
+      .subscribe((data: any[]) => {
+        if (data?.length !== 0 && data !== undefined) {
+          this.dataSource = data;
+          this.originalData = data;
+          this.numberOfPages = Math.ceil(this.dataSource.length / 6);
           this.slide(0);
         }
       });
 
-    this.tagStore
-      .select((store: any) => store.tag.tags)
-      .subscribe((data) => {
-        this.tags = data;
-        this.originalTags = this.tags;
-      });
+    this.filterInput.valueChanges.subscribe((value) => {
+      this.applyFilter(value);
+    });
   }
 
   openAddDialog() {
     this.dialog.open(AddImageDialog);
   }
 
-  getImageTags(image) {
-    const imageTags = [];
-    if (image.tagIds !== null) {
-      image.tagIds.forEach((element) => {
-        imageTags.unshift(this.tags.filter((input) => input._id === element));
-      });
-    }
-    return imageTags;
-  }
   updateImageDialog(image: Image) {
-    this.dialog.open(UpdateTagDialog, {
+    this.dialog.open(UpdateImageDialog, {
       data: {
         image,
       },
     });
   }
   deleteImage(image) {
-    const dialogRef = this.dialog.open(ConfirmationDialog, {
+    this.dialog.open(ConfirmationDialog, {
       data: {
         message: 'Are you sure want to delete?',
         calledBy: 'image.component',
@@ -117,17 +134,9 @@ export class MainPageComponent implements OnInit {
         },
       },
     });
-
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        this.snackBar.open('Delete done Successfully', 'x', {
-          duration: 2000,
-        });
-      }
-    });
   }
   slide(index) {
-    this.datasource = this.originalData.slice(index * 6, index * 6 + 6);
+    this.dataSource = this.originalData.slice(index * 6, index * 6 + 6);
   }
   nextPage() {
     if (this.page < this.numberOfPages - 1) this.page++;
@@ -143,28 +152,40 @@ export class MainPageComponent implements OnInit {
     this.selectdTagValue = event;
     console.log(event);
   }
-  addTag(image: Image) {
+  addTag(imageIndex) {
     if (
       this.selectdTagValue !== undefined &&
-      image.tagIds.filter((tagid) => tagid === this.selectdTagValue._id)
-        .length === 0
+      !this.originalData[imageIndex].tags.find(
+        (tag) => tag._id === this.selectdTagValue._id
+      )
     ) {
-      const updatedTagIds = Object.values(image.tagIds);
+      const updatedTagIds: string[] = Object.values(
+        this.originalImages[imageIndex].tagIds
+      );
       updatedTagIds.unshift(this.selectdTagValue._id);
       const updatedimage: Image = {
-        name: image.name,
-        id: image.id,
+        name: this.originalData[imageIndex].name,
+        id: this.originalData[imageIndex].id,
         tagIds: updatedTagIds,
-        imageUrl: image.imageUrl,
+        imageUrl: this.originalData[imageIndex].imageUrl,
       };
       this.imageStore.dispatch(new updateImageAction(updatedimage));
-      this.snackBar.open('tag added Successfully', 'x', {
+      this.snackBar.open('Tag added successfully', 'x', {
+        duration: 2000,
+      });
+    }
+    if (
+      this.selectdTagValue !== undefined &&
+      this.originalData[imageIndex].tags.find(
+        (tag) => tag._id === this.selectdTagValue._id
+      )
+    ) {
+      this.snackBar.open('Tag already exists', 'x', {
         duration: 2000,
       });
     }
   }
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
+  applyFilter(filterValue) {
     this.tags$ = this.tags$.pipe(
       map(() =>
         this.originalTags.filter((tag) =>
@@ -172,5 +193,12 @@ export class MainPageComponent implements OnInit {
         )
       )
     );
+  }
+  openComments(image) {
+    this.dialog.open(CommentDialogComponent, {
+      data: {
+        image,
+      },
+    });
   }
 }

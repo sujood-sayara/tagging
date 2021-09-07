@@ -9,21 +9,17 @@ import { AuthenticationService } from '..//services/authentication.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  returnUrl!: string;
-  hide = true;
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
+    public fb: FormBuilder,
     private authenticationService: AuthenticationService
   ) {}
-  loginForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
+  loginForm = this.fb.group({
+    username: '',
+    password: '',
   });
 
-  ngOnInit(): void {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-  }
+  ngOnInit(): void {}
   onSubmit() {
     this.authenticationService
       .login(

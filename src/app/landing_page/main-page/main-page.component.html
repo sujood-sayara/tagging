@@ -3,38 +3,42 @@
 <div class="buttondiv">
   <button class="btn striped-shadow white" (click)="openAddDialog()" mat-button> <span>Add Image</span></button>
 </div>
-<div style="margin-bottom: 20px;">
+<div>
   <mat-form-field class="filter" appearance="standard">
     <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" #input>
+    <input matInput [formControl]="filterInput" #input>
   </mat-form-field>
   <app-toolbar [tags$]="tags$" (selectedTag)="selectedTag($event)">
   </app-toolbar>
 </div>
-<div class="content">
-  <div fxLayout="row wrap" fxLayoutGap="16px">
-    <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let element of datasource ;let i=index;">
-      <mat-card class="mat-elevation-z4">
-        <mat-card-header>
-          <mat-card-title>{{datasource[i].name}}</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src={{datasource[i].imageUrl}} width="400px" height="300px" (click)="addTag(datasource[i])">
-        <mat-card-actions>
-          <button mat-button (click)="updateImageDialog(datasource[i])">Update</button>
-          <button mat-button (click)="deleteImage(datasource[i])">Delete Image</button>
-        </mat-card-actions>
 
-      </mat-card>
-
-      <div *ngFor="let TagArray of getImageTags(datasource[i]); index as j;">
-        <span class="circle" *ngFor="let Tag of TagArray; index as j;" style="background-color: {{Tag.tagColor}};">
-          {{Tag.tagName}}
-        </span>
+<div class="flexr">
+  <div class="horizontal-center button" (click)='prePage()'>
+    <label style="font-size:30px;color: blueviolet;"> &lt;&lt; </label>
+  </div>
+  <div class="center">
+    <div class="flexgrid">
+      <div *ngFor="let element of dataSource ;let i=index;" class="image">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>{{dataSource[i].name}}</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image src={{dataSource[i].imageUrl}} (click)="addTag(i)">
+          <mat-card-actions>
+            <button mat-button (click)="updateImageDialog(dataSource[i])">Update</button>
+            <button mat-button (click)="deleteImage(dataSource[i])">Delete Image</button>
+            <button mat-button (click)="openComments(dataSource[i])">Show Comments</button>
+          </mat-card-actions>
+        </mat-card>
+        <div class="flexr">
+          <span class="circle" *ngFor="let Tag of dataSource[i].tags" style="background-color: {{Tag.tagColor}};">
+            {{Tag.tagName}}
+          </span><br />
+        </div>
       </div>
     </div>
   </div>
+  <div class="horizontal-center button" (click)='nextPage()'>
+    <label style="font-size:30px;color: blueviolet;">>></label>
+  </div>
 </div>
-<div class="input-group">
-  <label style="font-size:30px;color: blueviolet;" (click)='nextPage();'>>></label>
-</div>
-<label style="font-size:30px;color: blueviolet;" (click)='prePage();'> &lt;&lt; </label>

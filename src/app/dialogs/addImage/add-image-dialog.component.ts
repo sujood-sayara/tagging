@@ -9,18 +9,14 @@ import { Tag } from 'src/models/tag';
 
 @Component({
   selector: 'dialog-image',
-  templateUrl: 'addImageDialog.html',
-  styleUrls: ['./add.image.dialog.css'],
+  templateUrl: 'add-image-dialog.component.html',
+  styleUrls: ['./add-image-dialog.component.css'],
 })
 export class AddImageDialog {
   tags: Tag[];
-  tagStore = this.store
-    .select((store: any) => store.tag.tags)
-    .subscribe((data) => (this.tags = data));
   constructor(
     public dialogRef: MatDialogRef<AddImageDialog>,
     public fb: FormBuilder,
-    private store: Store<tagState>,
     private imagestore: Store<imageState>
   ) {}
   addForm = this.fb.group({
@@ -38,8 +34,9 @@ export class AddImageDialog {
   }
 
   submitForm() {
-    if (this.addForm.controls.tagIds.value === null)
+    if (this.addForm.controls.tagIds.value === null) {
       this.addForm.controls.tagIds.setValue('[]');
+    }
     this.imagestore.dispatch(new AddImageAction(this.addForm.value));
     this.dialogRef.close();
   }

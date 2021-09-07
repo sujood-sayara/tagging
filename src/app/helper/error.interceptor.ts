@@ -10,12 +10,12 @@ import { catchError } from 'rxjs/operators';
 
 import { AuthenticationService } from '..//services/authentication.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
     private authenticationService: AuthenticationService,
-    private route: ActivatedRoute,
     private router: Router
   ) {}
 
@@ -29,9 +29,8 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.authenticationService.logout();
           this.router.navigate(['login']); //Error callback
         }
-
-        const error = err.error.message || err.statusText;
-        return throwError(error);
+        //   const error = err.error.message || err.statusText;
+        return throwError(err);
       })
     );
   }

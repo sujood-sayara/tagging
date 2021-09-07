@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Image comments</h1>
+<img src="{{imageinfo.image.imageUrl}}" width="200" height="200">
+<div class="flexr">
+    <span class="circle" *ngFor="let Tag of imageinfo.image.tags" style="background-color: {{Tag.tagColor}};">
+        {{Tag.tagName}}
+    </span>
+</div>
+<div class="comment" *ngIf="comments">
+<div class="box " *ngFor="let comment of comments.value; let i=index">
+        <div class='flexr'  >
+            <p   id="{{'edit-'+i}}">{{comment.text}} </p>
+            <span calss="spacing" style="padding-left: 10px;" (click)="deleteComment(comment._id)"> x </span> 
+            <span style="padding-left: 10px;" (click)="selectdComment(comment,i)"> <b> "Edit". </b> </span> <br />
+            <span style="padding-left: 10px;" (click)="updateComment(comment._id,i)"> submit</span>
+        </div>
+       
+    </div>
+</div>
+
+
+
+<div class="input-container">
+    <input type="text" id="txtSearch" [formControl]="comment" placeholder="Comment" spellcheck="false" />
+    <input type="button" id="btnSubmit" Value="enter" (click)="addComment()" />
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+</div>

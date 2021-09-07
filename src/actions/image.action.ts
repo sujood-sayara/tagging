@@ -1,11 +1,17 @@
 import { Action } from '@ngrx/store';
+import { Comment } from 'src/models/comment';
 import { Image } from 'src/models/image';
 
 export enum imagesActionTypes {
   LOAD_images = '[images] Load images',
   LOAD_images_SUCCESS = '[images] Load images Success',
   LOAD_images_FAILURE = '[images] Load images Failure',
+  LOAD_comments = '[comments] Load comments',
+  LOAD_comments_SUCCESS = '[comments] Load comments Success',
+  LOAD_comments_FAILURE = '[comments] Load comments Failure',
 
+  ADD_comments = '[comments] add comments',
+  ADD_comments_Success = '[comments] add comments Success',
   ADD_images = '[images] add images',
   ADD_images_Success = '[images] add images Success',
 
@@ -54,6 +60,30 @@ export class updateImageAction implements Action {
 export class updateImageSuccessAction implements Action {
   readonly type = imagesActionTypes.UPDATE_images_Success;
 }
+export class LoadCommentAction implements Action {
+  readonly type = imagesActionTypes.LOAD_comments;
+  constructor(public imageId: string) {}
+}
+
+export class LoadCommentSuccessAction implements Action {
+  readonly type = imagesActionTypes.LOAD_comments_SUCCESS;
+  constructor(public imageId: string, public payload: Comment[]) {}
+}
+
+export class LoadCammentFailureAction implements Action {
+  readonly type = imagesActionTypes.LOAD_comments_FAILURE;
+  constructor(public payload: Error) {}
+}
+
+export class addCommentAction implements Action {
+  readonly type = imagesActionTypes.ADD_comments;
+  constructor(public payload: Comment) {}
+}
+
+export class AddCommentSuccessAction implements Action {
+  readonly type = imagesActionTypes.ADD_comments_Success;
+  constructor(public payload: Comment) {}
+}
 
 export type imageAction =
   | LoadImageAction
@@ -64,4 +94,9 @@ export type imageAction =
   | deleteImageAction
   | deleteImageSuccessAction
   | updateImageAction
-  | updateImageSuccessAction;
+  | updateImageSuccessAction
+  | LoadCommentAction
+  | LoadCammentFailureAction
+  | LoadCommentSuccessAction
+  | addCommentAction
+  | AddCommentSuccessAction;
