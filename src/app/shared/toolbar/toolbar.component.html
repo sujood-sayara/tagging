@@ -1,13 +1,16 @@
-<mat-toolbar>
-  <div class="flexc "><button (click)='clear()'> clear selection</button>
-  <div class="flexr ">
-  <label class="horizontal-center" style="font-size:30px;color: blueviolet;" (click)='prePage();'> &lt;&lt; </label>
-  <div class="flexgrid">
-  <span class="example-spacer" [ngClass]="calculateClasses(tag)" *ngFor="let tag of tags$ | async"  (click)="selectdTagValue(tag)">
-    {{tag.tagName}}
-  </span>
+<div class="center">
+  <mat-toolbar id="testing">
+    <div><button class="btn" (click)='clear()'> clear selection</button>
+      <div class="flexr ">
+        <label class="circle zoom-on-hover" style="font-size:30px;color: blueviolet;" (click)='prePage();'> &lt;&lt; </label>
+
+        <span class="tag example-spacer" [ngClass]="calculateClasses(tag)" *ngFor="let tag of tags$ | async"
+          (click)="selectdTagValue(tag)">
+          {{tag.tagName}}
+        </span>
+
+        <label class="circle zoom-on-hover" style="font-size:30px;color: blueviolet;" (click)='nextPage();'>>></label>
+      </div>
+    </div>
+  </mat-toolbar>
 </div>
-  <label class="horizontal-center" style="font-size:30px;color: blueviolet;" (click)='nextPage();'>>></label>
-</div>
-</div> 
-</mat-toolbar>

@@ -59,6 +59,7 @@ export class MainPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log("hi")
     this.tags$ = this.tagStore.select((store: any) => store.tag.tags);
     this.tagStore
       .select((store: any) => store.tag.loaded)
@@ -83,6 +84,7 @@ export class MainPageComponent implements OnInit {
         mergeMap(([images, tags]) => {
           this.originalTags = tags;
           this.originalImages = images;
+          console.log(this.originalImages)
           let imageTags = [];
           if (images?.length !== 0 && tags?.length !== 0) {
             imageTags = images?.map((image: Image) => ({
@@ -112,7 +114,11 @@ export class MainPageComponent implements OnInit {
   }
 
   openAddDialog() {
-    this.dialog.open(AddImageDialog);
+    this.dialog.open(AddImageDialog,{
+      data:{
+        tags:this.originalTags,
+      }
+    });
   }
 
   updateImageDialog(image: Image) {

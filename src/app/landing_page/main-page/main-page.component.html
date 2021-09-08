@@ -1,6 +1,46 @@
 <app-header></app-header>
-
-<div class="buttondiv">
+<div>
+  <mat-form-field class="filter" appearance="standard">
+    <mat-label>Filter</mat-label>
+    <input matInput [formControl]="filterInput" #input>
+  </mat-form-field>
+  <app-toolbar [tags$]="tags$" (selectedTag)="selectedTag($event)">
+  </app-toolbar>
+  <div class="buttondiv">
+    <button class="btn striped-shadow white" (click)="openAddDialog()" mat-button> <span>Add Image</span></button>
+  </div>
+</div>
+<div class="flexr">
+  <div class="horizontal-center" >
+    <label class="directionCircle zoom-on-hover" style="font-size:30px;color: blueviolet;" (click)='prePage()'> &lt;&lt; </label>
+  </div>
+  <div class="center">
+    <div class="flexgrid">
+      <div *ngFor="let element of dataSource ;let i=index;" class="image">
+        <mat-card  class="zoom-on-hover">
+          <mat-card-header>
+            <mat-card-title>{{dataSource[i].name}}</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image  src={{dataSource[i].imageUrl}} (click)="addTag(i)">
+          <mat-card-actions>
+            <button mat-button (click)="updateImageDialog(dataSource[i])">Update</button>
+            <button mat-button (click)="deleteImage(dataSource[i])">Delete Image</button>
+            <button mat-button (click)="openComments(dataSource[i])">Show Comments</button>
+          </mat-card-actions>
+        </mat-card><br/>
+        <div class="flexr">
+          <span class="circle" *ngFor="let Tag of dataSource[i].tags" style="background-color: {{Tag.tagColor}};">
+            {{Tag.tagName}}
+          </span><br />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="horizontal-center" >
+    <label class="directionCircle zoom-on-hover" style="font-size:30px;color: blueviolet;" (click)='nextPage()'>>></label>
+  </div>
+</div>
+<!-- <div class="buttondiv">
   <button class="btn striped-shadow white" (click)="openAddDialog()" mat-button> <span>Add Image</span></button>
 </div>
 <div>
@@ -41,4 +81,4 @@
   <div class="horizontal-center button" (click)='nextPage()'>
     <label style="font-size:30px;color: blueviolet;">>></label>
   </div>
-</div>
+</div> -->

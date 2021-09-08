@@ -47,7 +47,7 @@ import { AuthenticationDialogComponent } from './dialogs/authentication-dialog/a
 import { reducerComment } from './reducers/comment.reducer';
 import { commentEffects } from './effects/comment.effect';
 import { CommentDialogComponent } from './dialogs/comment-dialog/comment-dialog.component';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 @NgModule({
   declarations: [
     AppComponent,
@@ -105,6 +105,7 @@ import { CommentDialogComponent } from './dialogs/comment-dialog/comment-dialog.
     CardsModule,
     MatSnackBarModule,
     MatToolbarModule,
+    FontAwesomeModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

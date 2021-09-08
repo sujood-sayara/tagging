@@ -1,8 +1,14 @@
 <h1 mat-dialog-title>Update Image information</h1>
-<img src="{{imageinfo.image.imageUrl}}" width="100" height="100">
+<div class="flexr">
+<img src="{{imageinfo.image.imageUrl}}" width="400" height="300">
 <div mat-dialog-content>
-  <label>Image name</label><br><br>
-  <input type="text" placeholder="{{imageinfo.image.name}}" id="imageName" [formControl]="imageName"><br><br>
+  <label class="imageName">Image name</label>
+  <div class="input-group">
+    <input value="" class="form-control" type="text" name="imageName" [formControl]="imageName" placeholder="{{imageinfo.image.name}}">
+    <label for="imageName">{{imageinfo.image.name}}</label>
+   
+  </div><br><br>
+  <!-- <input type="text" placeholder="{{imageinfo.image.name}}" id="imageName" [formControl]="imageName"><br><br> -->
   <mat-form-field appearance="fill">
     <mat-label>Tags</mat-label>
     <mat-select [formControl]="imageTags" multiple>
@@ -16,6 +22,7 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+</div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="UpdateImage(imageinfo.image.id,imageinfo.image.imageUrl)">save </button>

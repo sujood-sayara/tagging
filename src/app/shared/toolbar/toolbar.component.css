@@ -1,4 +1,4 @@
-  .selectedSpan{
+/* .selectedSpan{
     background-color:#970497 ;
   }
   .flexr {
@@ -21,4 +21,121 @@ button{
 }  
 .example-spacer {
   flex: 1 1 auto;
+} */
+.center {
+  width: 1700px;
+  display: flex;
+  justify-content: center;
+}
+.flexr {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+#testing {
+  display: flex;
+  justify-content: center;
+  font-family: "Helvetica", sans-serif;
+  font-size: 30px;
+  background: #171c24;
+  color: #ffffff;
+  width: 700px;
+  height: 70px;
+  text-align: center;
+  border-top: 3px solid #ababab;
+  border-bottom: 3px solid #ababab;
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  box-shadow: 0px 2px 18px rgba(0, 0, 0, 0.53);
+  -moz-box-shadow: 0px 2px 18px rgba(0, 0, 0, 0.53);
+  -webkit-box-shadow: 0px 2px 18px rgba(0, 0, 0, 0.53);
+}
+.example-spacer {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.circle {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%; /* the magic */
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 0 auto 40px;
+  background: rgb(196, 194, 194);
+}
+/* Button 3d */
+.btn-3d {
+  padding: 25px 60px 25px 120px;
+  border-radius: 10px;
+}
+
+/* Button 2g */
+
+.btn:hover {
+  box-shadow: 0 1px blueviolet;
+  top: 2px;
+}
+
+.btn:active {
+  box-shadow: 0 0 blueviolet;
+  top: 6px;
+}
+
+.btn {
+  background: blueviolet;
+  color: #fff;
+  box-shadow: 0 2px blueviolet;
+  -webkit-transition: none;
+  -moz-transition: none;
+  transition: none;
+  border-radius: 40px;
+  cursor: pointer;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 100;
+  outline: none;
+  position: relative;
+  -webkit-transition: all 0.1s;
+  -moz-transition: all 0.1s;
+  transition: all 0.1s;
+}
+.selectedSpan {
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 10px;
+  height: 40px;
+  background-color: blueviolet;
+}
+.tag {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%; /* the magic */
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  text-align: center;
+  color: white;
+  font-weight: 700;
+  margin: 0 auto 40px;
+
+}
+.zoom-on-hover {
+  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+}
+.zoom-on-hover:hover {
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
 }

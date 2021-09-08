@@ -49,6 +49,7 @@ export class CommentDialogComponent implements OnInit, OnDestroy {
           this.comments = comments?.find((comment) => comment.key === this.imageinfo.image.id);
         })
     );
+
   }
 
   addComment() {

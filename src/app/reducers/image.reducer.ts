@@ -18,7 +18,9 @@ export function reducerimage(
   state: imageState = initialState,
   action: imageAction
 ) {
+  console.log(action.type)
   switch (action.type) {
+   
     case imagesActionTypes.LOAD_images:
       return {
         ...state,
@@ -31,27 +33,6 @@ export function reducerimage(
         ],
         loaded: true,
       };
-    // case imagesActionTypes.LOAD_comments:
-    //   return {
-    //     ...state,
-    //   };
-    // case imagesActionTypes.LOAD_comments_SUCCESS:
-    //   let newImage=state.images.find((image) => image.id === action.imageId)
-    //   action.payload.map(comment=>
-    //     newImage.comments.push(comment)
-    //     )
-    //   let indexxx = state.images.findIndex(
-    //     (image) => image.id === action.imageId
-    //   );
-    //  // let newImage=state.images[indexxx]
-
-    //   const newState=state.images.filter(image=>image.id!==action.imageId)
-    //  newState.push(newImage)
-    //   return {
-    //     ...state,
-    //     images:{...newState},
-
-    //   };
 
     case imagesActionTypes.LOAD_images_FAILURE:
       return {

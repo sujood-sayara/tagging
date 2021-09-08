@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { AddImageAction, deleteImageAction } from 'src/actions/image.action';
 import { imageState } from 'src/app/reducers/image.reducer';
@@ -12,18 +12,20 @@ import { Tag } from 'src/models/tag';
   templateUrl: 'add-image-dialog.component.html',
   styleUrls: ['./add-image-dialog.component.css'],
 })
-export class AddImageDialog {
-  tags: Tag[];
-  constructor(
-    public dialogRef: MatDialogRef<AddImageDialog>,
-    public fb: FormBuilder,
-    private imagestore: Store<imageState>
-  ) {}
+export class AddImageDialog   {
+  tags=this.tagsValues.tags;
   addForm = this.fb.group({
     name: '',
     tagIds: [],
     image: [null],
   });
+  constructor(
+    public dialogRef: MatDialogRef<AddImageDialog>,
+    public fb: FormBuilder,
+    private imagestore: Store<imageState>,
+    @Inject(MAT_DIALOG_DATA) public tagsValues: any
+  ) {}
+ 
 
   uploadFile(event) {
     const file = (event.target as HTMLInputElement).files[0];
