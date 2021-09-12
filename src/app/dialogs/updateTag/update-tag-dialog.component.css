@@ -38,3 +38,8 @@
     background: transparent;
     border: 2px solid rgba(69, 39, 160, .4);
   }
+  .flexr{
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+  }

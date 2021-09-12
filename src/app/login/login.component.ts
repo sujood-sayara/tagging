@@ -13,19 +13,13 @@ export class LoginComponent implements OnInit {
     private router: Router,
     public fb: FormBuilder,
     private authenticationService: AuthenticationService
-  ) { }
+  ) {}
   loginForm = this.fb.group({
     username: '',
     password: '',
   });
 
-  ngOnInit(): void { }
-
-
-
-
-
-
+  ngOnInit(): void {}
 
   onSubmit() {
     this.authenticationService

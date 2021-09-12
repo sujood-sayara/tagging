@@ -4,7 +4,13 @@
   }
   .flexr{
     display: flex;
-    flex-direction:row-reverse;
+    flex-direction:row;
+  }
+  .flexc{
+    display: flex;
+    flex-direction:column;
+    column-gap: 20px;
+    padding: 20px
   }
   *:focus {
     outline: none;
@@ -87,7 +93,9 @@
   }
   .imageName{
     font-family: 'Caveat', cursive;
-    font-size: 2em;
+    font-size: 1.5em;
+    padding: 10px;
+
   }
   button {
     background: transparent;
@@ -97,4 +105,14 @@
     margin: 20px 0;
     padding: 10px 30px;
     border: 2px solid purple;
+  }
+  .flexrr{
+    display: flex;
+    flex-direction:row;
+    justify-content: flex-end;
+    
+  }
+  mat-button{
+padding: 10px;
+margin: 20px;
   }

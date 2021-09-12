@@ -32,8 +32,8 @@ export class ConfirmationDialog {
   onConfirmClick(): void {
     if (this.data.calledBy === 'tag.component') {
       this.tagStore.dispatch(new deleteTagAction(this.data.elementId));
-    } else if (this.data.calledBy === 'image.component')
-      this.tagStore.dispatch(new deleteImageAction(this.data.elementId));
+    } else if (this.data.calledBy === 'image.component'){
+      this.tagStore.dispatch(new deleteImageAction(this.data.elementId));}
     this.dialogRef.close(true);
   }
 }

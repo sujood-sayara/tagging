@@ -16,7 +16,6 @@ const initialState: tagState = {
 };
 
 export function reducertag(state: tagState = initialState, action: tagAction) {
-  console.log(action.type)
   switch (action.type) {
     case tagsActionTypes.LOAD_tags:
       return {

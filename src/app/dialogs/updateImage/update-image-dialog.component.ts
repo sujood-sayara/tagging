@@ -36,11 +36,13 @@ export class UpdateImageDialog implements OnInit {
 
   UpdateImage(id, imageurl) {
     let tagsIDs;
-    if (this.imageTags.value === null) 
-    tagsIDs = [];
-    else tagsIDs = this.imageTags.value;
+    if (this.imageTags.value === null) {
+      tagsIDs = [];
+    } else {
+      tagsIDs = this.imageTags.value;
+    }
     const image: Image = {
-      name: this.imageName.value ,
+      name: this.imageName.value,
       id: id,
       tagIds: tagsIDs,
       imageUrl: imageurl,

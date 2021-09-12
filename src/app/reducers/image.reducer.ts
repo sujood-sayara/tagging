@@ -18,7 +18,6 @@ export function reducerimage(
   state: imageState = initialState,
   action: imageAction
 ) {
-  console.log(action.type)
   switch (action.type) {
    
     case imagesActionTypes.LOAD_images:

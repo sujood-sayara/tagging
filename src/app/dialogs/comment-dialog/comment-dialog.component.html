@@ -1,12 +1,6 @@
 <h1 mat-dialog-title>Image comments</h1>
 <div class="flexrv">
 <img src="{{imageinfo.image.imageUrl}}" width="400" height="300">
-<!-- <div class="flexr">
-    <span class="circle" *ngFor="let Tag of imageinfo.image.tags" style="background-color: {{Tag.tagColor}};">
-        {{Tag.tagName}}
-    </span>
-</div> -->
-
 <div class="comment" *ngIf="comments">
 <div class="box " *ngFor="let comment of comments.value; let i=index">
         <div class='flexr'>
@@ -19,10 +13,6 @@
     </div>
 </div>
 </div>
-
-
-
-
 <div class="input-container">
     <input type="text" id="txtSearch" [formControl]="comment" placeholder="Comment" spellcheck="false" />
     <input type="button" id="btnSubmit" Value="enter" (click)="addComment()" />

@@ -43,3 +43,8 @@ button:hover {
   text-align: center;
   display: block;
 }
+.flexr{
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+}

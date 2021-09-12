@@ -54,12 +54,9 @@ export class MainPageComponent implements OnInit {
     private imageStore: Store<imageState>,
     private tagStore: Store<tagState>,
     private snackBar: MatSnackBar,
-    private router: Router,
-    private commentService: CommentsService
   ) {}
 
   ngOnInit(): void {
-    console.log("hi")
     this.tags$ = this.tagStore.select((store: any) => store.tag.tags);
     this.tagStore
       .select((store: any) => store.tag.loaded)
@@ -84,7 +81,6 @@ export class MainPageComponent implements OnInit {
         mergeMap(([images, tags]) => {
           this.originalTags = tags;
           this.originalImages = images;
-          console.log(this.originalImages)
           let imageTags = [];
           if (images?.length !== 0 && tags?.length !== 0) {
             imageTags = images?.map((image: Image) => ({
@@ -156,7 +152,6 @@ export class MainPageComponent implements OnInit {
   }
   selectedTag(event) {
     this.selectdTagValue = event;
-    console.log(event);
   }
   addTag(imageIndex) {
     if (
