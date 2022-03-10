@@ -20,6 +20,7 @@ import {
 import { ImagesService } from '../services/images.service';
 import { CommentsService } from '../services/comments.service';
 import { Comment } from 'src/models/comment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class imageEffects {
@@ -52,8 +53,17 @@ export class imageEffects {
       ofType(imagesActionTypes.DELETE_images),
       map((action: deleteImageAction) => action.payload),
       switchMap((imageId) => this.imageservice.deleteImage(imageId)),
-      map(() => {
+      map((data: any) => {
+        this.snackBar.open('Delete done Successfully', 'x', {
+          duration: 2000,
+        });
         return new deleteImageSuccessAction();
+      }),
+      catchError((err) => {
+        this.snackBar.open('Could not delete image', 'x', {
+          duration: 2000,
+        });
+        return of(err);
       })
     )
   );
@@ -72,6 +82,7 @@ export class imageEffects {
   constructor(
     private actions$: Actions,
     private imageservice: ImagesService,
-    private commmentservice: CommentsService
+    private commmentservice: CommentsService,
+    private snackBar: MatSnackBar
   ) {}
 }

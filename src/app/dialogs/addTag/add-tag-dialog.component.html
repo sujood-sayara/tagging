@@ -5,9 +5,9 @@
     <input type="text" placeholder="" required formControlName="tagName" /> <br>
     <label> Tag color: </label> <br>
     <input type="color" id="favcolor" name="favcolor" value="#800080" required formControlName="tagColor"><br>
+    <div mat-dialog-actions class="flexr">
+      <button mat-button type="submit" [disabled]="!newTag.valid">save</button>
+      <button mat-button mat-dialog-close>Close</button>
+    </div>
   </form>
-</div>
-<div mat-dialog-actions class="flexr">
-  <button mat-button type="submit" [disabled]="!newTag.valid">save</button>
-  <button mat-button mat-dialog-close>Close</button>
 </div>
