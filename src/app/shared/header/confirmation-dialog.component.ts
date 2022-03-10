@@ -3,9 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { deleteImageAction } from 'src/actions/image.action';
 import { deleteTagAction } from 'src/actions/tag.action';
-import { imageState } from 'src/app/reducers/image.reducer';
 import { tagState } from 'src/app/reducers/tag.reducer';
-
 
 @Component({
   selector: 'confirmation-dialog',
@@ -18,8 +16,7 @@ export class ConfirmationDialog {
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<ConfirmationDialog>,
-    private tagStore: Store<tagState>,
-    private imageStore: Store<imageState>,
+    private tagStore: Store<tagState>
   ) {
     if (this.data) {
       this.message = this.data.message || this.message;
@@ -35,9 +32,8 @@ export class ConfirmationDialog {
   onConfirmClick(): void {
     if (this.data.calledBy === 'tag.component') {
       this.tagStore.dispatch(new deleteTagAction(this.data.elementId));
-    } else if (this.data.calledBy === 'image.component') {
-      this.imageStore.dispatch(new deleteImageAction(this.data.elementId));
-    }
+    } else if (this.data.calledBy === 'image.component'){
+      this.tagStore.dispatch(new deleteImageAction(this.data.elementId));}
     this.dialogRef.close(true);
   }
 }

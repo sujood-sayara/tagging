@@ -19,9 +19,9 @@
       <div *ngFor="let element of dataSource ;let i=index;" class="image">
         <mat-card  class="zoom-on-hover">
           <mat-card-header>
-            <mat-card-title>{{element.name}}</mat-card-title>
+            <mat-card-title>{{dataSource[i].name}}</mat-card-title>
           </mat-card-header>
-          <img mat-card-image  src={{element.imageUrl}} (click)="addTag(i)">
+          <img mat-card-image  src={{dataSource[i].imageUrl}} (click)="addTag(i)">
           <mat-card-actions>
             <button mat-button (click)="updateImageDialog(dataSource[i])">Update</button>
             <button mat-button (click)="deleteImage(dataSource[i])">Delete Image</button>

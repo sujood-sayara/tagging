@@ -2,7 +2,6 @@ import {
   Component,
   ComponentFactoryResolver,
   Input,
-  OnDestroy,
   OnInit,
   Renderer2,
 } from '@angular/core';
@@ -39,7 +38,7 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.css'],
 })
-export class MainPageComponent implements OnInit,OnDestroy {
+export class MainPageComponent implements OnInit {
   filterInput = new FormControl('');
   dataSource: any[];
   originalData: any[];
@@ -49,16 +48,16 @@ export class MainPageComponent implements OnInit,OnDestroy {
   selectdTagValue;
   originalTags;
   originalImages: any;
-  cardSubcription: any;
+
   constructor(
     public dialog: MatDialog,
     private imageStore: Store<imageState>,
     private tagStore: Store<tagState>,
     private snackBar: MatSnackBar,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.tags$ = this.tagStore.select((store: any) => store.tag.tags);//move it to toolbar comp.
+    this.tags$ = this.tagStore.select((store: any) => store.tag.tags);
     this.tagStore
       .select((store: any) => store.tag.loaded)
       .subscribe((isLoaded) => {
@@ -73,7 +72,8 @@ export class MainPageComponent implements OnInit,OnDestroy {
           this.imageStore.dispatch(new LoadImageAction());
         }
       });
-      this.cardSubcription  = combineLatest([
+
+    const joinStream = combineLatest([
       this.imageStore.select((store: any) => store.image.images),
       this.tagStore.select((store: any) => store.tag.tags),
     ])
@@ -96,16 +96,13 @@ export class MainPageComponent implements OnInit,OnDestroy {
         })
       )
       .subscribe((data: any[]) => {
-    
-        if (data !== undefined) {
+        if (data?.length !== 0 && data !== undefined) {
           this.dataSource = data;
-       
           this.originalData = data;
           this.numberOfPages = Math.ceil(this.dataSource.length / 6);
           this.slide(0);
         }
       });
-   
 
     this.filterInput.valueChanges.subscribe((value) => {
       this.applyFilter(value);
@@ -113,16 +110,12 @@ export class MainPageComponent implements OnInit,OnDestroy {
   }
 
   openAddDialog() {
-    this.dialog.open(AddImageDialog, {
-      data: {
-        tags: this.originalTags,
+    this.dialog.open(AddImageDialog,{
+      data:{
+        tags:this.originalTags,
       }
     });
   }
-  ngOnDestroy(): void {
-    this.cardSubcription.unsubscribe();
-  }
-
 
   updateImageDialog(image: Image) {
     this.dialog.open(UpdateImageDialog, {
@@ -134,7 +127,7 @@ export class MainPageComponent implements OnInit,OnDestroy {
   deleteImage(image) {
     this.dialog.open(ConfirmationDialog, {
       data: {
-        message: 'Are you sure want to delete image?',
+        message: 'Are you sure want to delete?',
         calledBy: 'image.component',
         elementId: image.id,
         buttonText: {

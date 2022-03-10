@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('jwt', JSON.stringify(data));
           this.router.navigate(['home']);
         },
-        () => {
+        (error) => {
           localStorage.removeItem('jwt');
           this.router.navigate(['login']); //Error callback
         }

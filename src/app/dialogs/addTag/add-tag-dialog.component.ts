@@ -13,7 +13,7 @@ import { tagState } from 'src/app/reducers/tag.reducer';
 export class AddDialog {
   newTag = this.fb.group({
     tagName: '',
-    tagColor: '#000000',
+    tagColor: '',
   });
   constructor(
     public dialogRef: MatDialogRef<AddDialog>,
