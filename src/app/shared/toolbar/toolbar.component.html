@@ -1,16 +1,22 @@
 <div class="center">
-  <mat-toolbar id="testing">
-    <div><button class="btn" (click)='clear()'> clear selection</button>
-      <div class="flexr ">
-        <label class="circle zoom-on-hover" style="font-size:30px;color: blueviolet;" (click)='prePage();'> &lt;&lt; </label>
+  <div>
+    <mat-form-field class="filter" appearance="standard">
+      <mat-label>Filter</mat-label>
+      <input matInput [formControl]="filterInput" #input>
+    </mat-form-field>
+    <mat-toolbar id="testing">
+      <div><button class="btn" (click)='clear()'> clear selection</button>
+        <div class="flexr ">
+          <label class="circle zoom-on-hover" style="font-size:30px;color: blueviolet;" (click)='prevPage();'> &lt;&lt;
+          </label>
 
-        <span class="tag example-spacer" [ngClass]="calculateClasses(tag)" *ngFor="let tag of tags$ | async"
-          (click)="selectdTagValue(tag)">
-          {{tag.tagName}}
-        </span>
+          <span class="tag example-spacer" [ngClass]="calculateClasses(tag)" *ngFor="let tag of dataSource"
+            (click)="selectdTagValue(tag)">
+            {{tag.tagName}}
+          </span>
 
-        <label class="circle zoom-on-hover" style="font-size:30px;color: blueviolet;" (click)='nextPage();'>>></label>
+          <label class="circle zoom-on-hover" style="font-size:30px;color: blueviolet;" (click)='nextPage();'>>></label>
+        </div>
       </div>
-    </div>
-  </mat-toolbar>
-</div>
+    </mat-toolbar>
+  </div>

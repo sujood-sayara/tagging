@@ -101,7 +101,6 @@
   color: white;
   font-weight: 700;
   margin: 0 auto 40px;
-
 }
 .zoom-on-hover {
   transition: all 0.5s ease-in-out;
@@ -114,4 +113,12 @@
   -o-transform: scale(1.1);
   -ms-transform: scale(1.1);
   transform: scale(1.1);
+}
+.filter {
+  padding: 0.5rem;
+  width: 50%;
+  max-width: 600px;
+  box-sizing: border-box;
+  text-align: center;
+  margin-left: 30%;
 }
