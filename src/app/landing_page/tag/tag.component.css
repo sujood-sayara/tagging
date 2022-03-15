@@ -1,7 +1,8 @@
+@import "https://fonts.googleapis.com/css?family=Bungee+Shade";
 
-  @import 'https://fonts.googleapis.com/css?family=Bungee+Shade';
-
-*, :after, :before {
+*,
+:after,
+:before {
   box-sizing: border-box;
 }
 
@@ -17,7 +18,6 @@ div {
   display: flex;
   flex-flow: row wrap;
   justify-content: left;
-  
 }
 button {
   overflow: visible;
@@ -37,7 +37,6 @@ button {
   background: blueviolet;
 }
 
-
 .btn {
   height: 80px;
   line-height: 65px;
@@ -45,12 +44,10 @@ button {
   letter-spacing: 1px;
   position: relative;
   font-size: 1.35rem;
-  transition: opacity .3s, z-index .3s step-end, -webkit-transform .3s;
-  transition: opacity .3s, z-index .3s step-end, transform .3s;
-  transition: opacity .3s,
-    z-index .3s step-end,
-    transform .3s,
-    -webkit-transform .3s;
+  transition: opacity 0.3s, z-index 0.3s step-end, -webkit-transform 0.3s;
+  transition: opacity 0.3s, z-index 0.3s step-end, transform 0.3s;
+  transition: opacity 0.3s, z-index 0.3s step-end, transform 0.3s,
+    -webkit-transform 0.3s;
   z-index: 1;
   background-color: transparent;
   cursor: pointer;
@@ -62,7 +59,8 @@ button {
   line-height: 38px;
 }
 
-button.btn.striped-shadow.white:after, button.btn.striped-shadow.white:before {
+button.btn.striped-shadow.white:after,
+button.btn.striped-shadow.white:before {
   background-image: linear-gradient(
     135deg,
     transparent 0,
@@ -73,18 +71,20 @@ button.btn.striped-shadow.white:after, button.btn.striped-shadow.white:before {
   );
 }
 
-button.btn.striped-shadow.blue:after, button.btn.striped-shadow.blue:before {
+button.btn.striped-shadow.blue:after,
+button.btn.striped-shadow.blue:before {
   background-image: linear-gradient(
     135deg,
     transparent 0,
     transparent 5px,
-    #4183D7 5px,
-    #4183D7 10px,
+    #4183d7 5px,
+    #4183d7 10px,
     transparent 10px
   );
 }
 
-button.btn.striped-shadow.dark:after, button.btn.striped-shadow.dark:before {
+button.btn.striped-shadow.dark:after,
+button.btn.striped-shadow.dark:before {
   background-image: linear-gradient(
     135deg,
     transparent 0,
@@ -107,14 +107,16 @@ button.btn.striped-shadow:after {
   background-size: 15px 8px;
   background-repeat: repeat-x;
 }
-button.btn.striped-shadow:after, button.btn.striped-shadow:before {
-  content: '';
+button.btn.striped-shadow:after,
+button.btn.striped-shadow:before {
+  content: "";
   display: block;
   position: absolute;
   z-index: 1;
-  transition: max-height .3s, width .3s, -webkit-transform .3s;
-  transition: transform .3s, max-height .3s, width .3s;
-  transition: transform .3s, max-height .3s, width .3s, -webkit-transform .3s;
+  transition: max-height 0.3s, width 0.3s, -webkit-transform 0.3s;
+  transition: transform 0.3s, max-height 0.3s, width 0.3s;
+  transition: transform 0.3s, max-height 0.3s, width 0.3s,
+    -webkit-transform 0.3s;
 }
 
 .btn.striped-shadow:hover {
@@ -124,7 +126,8 @@ button.btn.striped-shadow:after, button.btn.striped-shadow:before {
   z-index: 3;
 }
 
-button.btn.striped-shadow:hover:after, button.btn.striped-shadow:hover:before {
+button.btn.striped-shadow:hover:after,
+button.btn.striped-shadow:hover:before {
   -webkit-transform: translate(12px, -12px);
   -ms-transform: translate(12px, -12px);
   transform: translate(12px, -12px);
@@ -139,14 +142,13 @@ button.btn.striped-shadow:before {
   background-repeat: repeat-y;
   background-position: 0 100%;
 }
-.filter{
-    padding: .5rem;
-    width: 50%;
-    max-width: 600px;
-    box-sizing: border-box;
-    text-align: center;
-    margin-left: 30%;
-
+.filter {
+  padding: 0.5rem;
+  width: 50%;
+  max-width: 600px;
+  box-sizing: border-box;
+  text-align: center;
+  margin-left: 30%;
 }
 table {
   display: table;
@@ -164,14 +166,13 @@ tr {
 tr:nth-child(odd) {
   background-color: #777;
   border-collapse: none;
-  
 }
 p {
   font-size: 18px;
   font-weight: 700;
   text-align: center;
 }
-th{
+th {
   background-color: black;
   border-collapse: none;
   font-size: 18px;
@@ -183,14 +184,13 @@ td {
   width: 33.33%;
   padding: 5px 10px;
   text-align: center;
-  
 }
-input[type=button] {
+input[type="button"] {
   display: inline-block;
   border-radius: 10px;
   background-color: blueviolet;
   border: none;
-  color: #FFFFFF;
+  color: #ffffff;
   text-align: center;
   font-size: 18px;
   width: 80px;
@@ -199,11 +199,11 @@ input[type=button] {
   cursor: pointer;
   margin: 5px;
 }
-.flexc{
+.flexc {
   display: flex;
   flex-direction: column;
 }
-.tagButton{
+.tagButton {
   width: 80%;
   padding-left: 150px;
 }

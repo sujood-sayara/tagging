@@ -25,21 +25,16 @@ export class TagComponent implements OnInit, OnDestroy, AfterViewInit {
   displayedColumns: string[] = ['tagName', 'tagColor', 'delete', 'edit'];
   dataSource = new MatTableDataSource<Tag>([]);
   tagSubcription: any;
-  tagStore;
-  constructor(public dialog: MatDialog, private store: Store<tagState>) {}
+  constructor(public dialog: MatDialog, private store: Store<tagState>) { }
 
   ngOnInit(): void {
-    this.tagStore = this.store.select((store: any) => store.tag.loaded);
-    this.tagSubcription = this.tagStore.subscribe((data) => {
-      if (!data) {
-        this.store.dispatch(new LoadTagAction());
-      }
-    });
-
-    this.store
+    this.tagSubcription = this.store
       .select((store: any) => store.tag.tags)
       .subscribe((data) => {
-        if (data !== undefined) {
+        if (data === undefined) {
+          this.store.dispatch(new LoadTagAction());
+        }
+        else {
           this.dataSource.data = data;
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
