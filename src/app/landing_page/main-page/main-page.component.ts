@@ -15,7 +15,6 @@ import {
 } from 'src/actions/image.action';
 import { imageState } from 'src/app/reducers/image.reducer';
 import { tagState } from 'src/app/reducers/tag.reducer';
-import { ImagesService } from 'src/app/services/images.service';
 import 'lodash';
 import * as _ from 'lodash';
 import { AddImageDialog } from '../../dialogs/addImage/add-image-dialog.component';
@@ -29,8 +28,6 @@ import { map, mergeMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { observable, of } from 'rxjs';
 import { combineLatest } from 'rxjs';
-import { find } from 'lodash';
-import { Router } from '@angular/router';
 import { CommentsService } from 'src/app/services/comments.service';
 import { CommentDialogComponent } from 'src/app/dialogs/comment-dialog/comment-dialog.component';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
@@ -39,13 +36,14 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.css'],
 })
-export class MainPageComponent implements OnInit,OnDestroy {
-  filterInput = new FormControl('');
+export class MainPageComponent implements OnInit, OnDestroy {
+
   dataSource: any[];
   originalData: any[];
   numberOfPages;
   page = 0;
   tags$;
+  imageTags = [];
   selectdTagValue;
   originalTags;
   originalImages: any;
@@ -58,32 +56,23 @@ export class MainPageComponent implements OnInit,OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.tags$ = this.tagStore.select((store: any) => store.tag.tags);//move it to toolbar comp.
-    this.tagStore
-      .select((store: any) => store.tag.loaded)
-      .subscribe((isLoaded) => {
-        if (!isLoaded) {
-          this.tagStore.dispatch(new LoadTagAction());
-        }
-      });
-    this.imageStore
-      .select((store: any) => store.image.loaded)
-      .subscribe((isLoaded) => {
-        if (!isLoaded) {
-          this.imageStore.dispatch(new LoadImageAction());
-        }
-      });
-      this.cardSubcription  = combineLatest([
+    this.cardSubcription = combineLatest([
       this.imageStore.select((store: any) => store.image.images),
       this.tagStore.select((store: any) => store.tag.tags),
     ])
       .pipe(
         mergeMap(([images, tags]) => {
-          this.originalTags = tags;
-          this.originalImages = images;
-          let imageTags = [];
-          if (images?.length !== 0 && tags?.length !== 0) {
-            imageTags = images?.map((image: Image) => ({
+          if (tags === undefined) {
+            this.tagStore.dispatch(new LoadTagAction());
+          }
+          if (images === undefined) {
+            this.imageStore.dispatch(new LoadImageAction());
+          }
+          else if (images !== undefined && tags !== undefined) {
+            this.originalTags = tags;
+            this.originalImages = images;
+
+            this.imageTags = images?.map((image: Image) => ({
               id: image.id,
               name: image.name,
               imageUrl: image.imageUrl,
@@ -92,24 +81,21 @@ export class MainPageComponent implements OnInit,OnDestroy {
               ),
             }));
           }
-          return of(imageTags);
+          return of(this.imageTags);
         })
       )
       .subscribe((data: any[]) => {
-    
+
         if (data !== undefined) {
           this.dataSource = data;
-       
           this.originalData = data;
           this.numberOfPages = Math.ceil(this.dataSource.length / 6);
           this.slide(0);
         }
       });
-   
 
-    this.filterInput.valueChanges.subscribe((value) => {
-      this.applyFilter(value);
-    });
+
+
   }
 
   openAddDialog() {
@@ -152,7 +138,7 @@ export class MainPageComponent implements OnInit,OnDestroy {
     else this.page = 0;
     this.slide(this.page);
   }
-  prePage() {
+  prevPage() {
     if (this.page > 0) this.page--;
     else this.page = this.numberOfPages - 1;
     this.slide(this.page);
@@ -192,15 +178,6 @@ export class MainPageComponent implements OnInit,OnDestroy {
         duration: 2000,
       });
     }
-  }
-  applyFilter(filterValue) {
-    this.tags$ = this.tags$.pipe(
-      map(() =>
-        this.originalTags.filter((tag) =>
-          tag.tagName.toLowerCase().includes(filterValue.toLowerCase())
-        )
-      )
-    );
   }
   openComments(image) {
     this.dialog.open(CommentDialogComponent, {

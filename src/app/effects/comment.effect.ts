@@ -45,5 +45,5 @@ export class commentEffects {
     private actions$: Actions,
     private commentservice: CommentsService,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 }

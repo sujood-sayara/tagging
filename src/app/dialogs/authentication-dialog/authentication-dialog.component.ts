@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class AuthenticationDialogComponent implements OnInit {
 
-  constructor( public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }

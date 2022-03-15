@@ -15,9 +15,9 @@ export class RegisterComponent implements OnInit {
     username: new FormControl(''),
     password: new FormControl(''),
   });
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   onSubmit() {
     this.userService
       .signup(

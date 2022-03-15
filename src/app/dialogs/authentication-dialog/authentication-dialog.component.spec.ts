@@ -8,9 +8,9 @@ describe('AuthenticationDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AuthenticationDialogComponent ]
+      declarations: [AuthenticationDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

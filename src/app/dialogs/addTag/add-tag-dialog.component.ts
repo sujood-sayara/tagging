@@ -19,7 +19,7 @@ export class AddDialog {
     public dialogRef: MatDialogRef<AddDialog>,
     private tagStore: Store<tagState>,
     public fb: FormBuilder
-  ) {}
+  ) { }
 
   addTag() {
     this.tagStore.dispatch(new addTagAction(this.newTag.value));

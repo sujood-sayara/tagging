@@ -5,14 +5,10 @@ import * as _ from 'lodash';
 
 export interface tagState {
   tags: Tag[];
-
-  loaded: boolean;
 }
 
 const initialState: tagState = {
-  tags: [],
-
-  loaded: false,
+  tags: undefined,
 };
 
 export function reducertag(state: tagState = initialState, action: tagAction) {
@@ -25,7 +21,6 @@ export function reducertag(state: tagState = initialState, action: tagAction) {
       return {
         ...state,
         tags: [...action.payload],
-        loaded: true,
       };
 
     case tagsActionTypes.LOAD_tgs_FAILURE:

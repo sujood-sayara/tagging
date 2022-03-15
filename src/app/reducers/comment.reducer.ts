@@ -87,7 +87,7 @@ export function reducerComment(
         (comment) => comment._id === action.commentId
       );
       stateCopy.imageComments[imageIndex].value[commentIndex] = action.payload;
-      
+
       return {
         ...stateCopy,
       };

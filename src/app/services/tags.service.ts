@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class TagsService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
   getTags() {
     return this.httpClient.get<Tag[]>(`${environment.apiUrl}/tags`);
   }

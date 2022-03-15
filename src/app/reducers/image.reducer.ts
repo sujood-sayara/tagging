@@ -5,13 +5,10 @@ import * as _ from 'lodash';
 
 export interface imageState {
   images: Image[];
-  loaded: boolean;
 }
 
 const initialState: imageState = {
-  images: [],
-
-  loaded: false,
+  images: undefined,
 };
 
 export function reducerimage(
@@ -19,7 +16,7 @@ export function reducerimage(
   action: imageAction
 ) {
   switch (action.type) {
-   
+
     case imagesActionTypes.LOAD_images:
       return {
         ...state,
@@ -30,7 +27,6 @@ export function reducerimage(
         images: [
           ...action.payload.map((image) => ({ ...image, comments: [] })),
         ],
-        loaded: true,
       };
 
     case imagesActionTypes.LOAD_images_FAILURE:

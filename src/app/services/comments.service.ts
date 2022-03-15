@@ -10,7 +10,7 @@ import { Comment } from 'src/models/comment';
 export class CommentsService {
   path = 'comments';
   data: any;
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
   getComments() {
     return this.httpClient.get<Comment[]>(`${environment.apiUrl}/${this.path}`);
   }

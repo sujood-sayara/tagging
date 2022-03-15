@@ -27,7 +27,7 @@ export class UpdateImageDialog implements OnInit {
     private store: Store<tagState>,
     private imageStore: Store<imageState>,
     @Inject(MAT_DIALOG_DATA) public imageinfo: any
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.store
       .select((store: any) => store.tag.tags)

@@ -8,7 +8,6 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
-                <h3 class="text-center mb-4">Have an account?</h3>
                 <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
                         <input type="text" class="form-control rounded-left" placeholder="Username" required
@@ -22,7 +21,7 @@
                         <a routerLink="/register">create an account</a>
                     </div>
                     <button type="submit" [disabled]="!loginForm.valid"
-                        class="btn btn-primary rounded submit p-3 px-5">Get Started</button>
+                        class="btn btn-primary rounded submit p-3 px-5">LogIn</button>
 
                 </form>
 

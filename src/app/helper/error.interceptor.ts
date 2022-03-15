@@ -17,7 +17,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router
-  ) {}
+  ) { }
 
   intercept(
     request: HttpRequest<any>,

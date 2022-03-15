@@ -64,7 +64,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
     ToolbarComponent,
     AuthenticationDialogComponent,
     CommentDialogComponent,
-    
+
   ],
   imports: [
     BrowserModule,
@@ -75,24 +75,15 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
     ReactiveFormsModule,
     MatIconModule,
     CommonModule,
-    BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatFormFieldModule, // it's redundant here since MatInputModule already exports it
     MatTableModule,
     MatDialogModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule,
     MatInputModule,
-    MatFormFieldModule,
     RouterModule.forRoot(routes),
-    StoreModule.forRoot({ tag: reducertag, image: reducerimage ,comment: reducerComment}),
-    EffectsModule.forRoot([tagEffects, imageEffects,commentEffects]),
+    StoreModule.forRoot({ tag: reducertag, image: reducerimage, comment: reducerComment }),
+    EffectsModule.forRoot([tagEffects, imageEffects, commentEffects]),
     MatCardModule,
     MatToolbarModule,
     MatButtonModule,
@@ -104,7 +95,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
     ButtonsModule,
     CardsModule,
     MatSnackBarModule,
-    MatToolbarModule,
     FontAwesomeModule
   ],
   providers: [
@@ -114,4 +104,4 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

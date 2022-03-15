@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ImagesService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
   getImages() {
     return this.httpClient.get<Image[]>(`${environment.apiUrl}/images`, {
       observe: 'response',

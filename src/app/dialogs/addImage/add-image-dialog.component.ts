@@ -12,8 +12,8 @@ import { Tag } from 'src/models/tag';
   templateUrl: 'add-image-dialog.component.html',
   styleUrls: ['./add-image-dialog.component.css'],
 })
-export class AddImageDialog   {
-  tags=this.tagsValues.tags;
+export class AddImageDialog {
+  tags = this.tagsValues.tags;
   addForm = this.fb.group({
     name: '',
     tagIds: [],
@@ -24,8 +24,8 @@ export class AddImageDialog   {
     public fb: FormBuilder,
     private imagestore: Store<imageState>,
     @Inject(MAT_DIALOG_DATA) public tagsValues: any
-  ) {}
- 
+  ) { }
+
 
   uploadFile(event) {
     const file = (event.target as HTMLInputElement).files[0];

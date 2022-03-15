@@ -1,11 +1,12 @@
-    <div class="wrapper">
-    <nav>
-      <div class="content">
+<div class="wrapper">
+  <nav>
+    <div class="content">
       <div class="logo">Gallery</div>
-        <ul class="links">
-          <li><a routerLink="/home">Home</a></li>
+      <ul class="links">
+        <li><a routerLink="/home">Home</a></li>
         <li><a routerLink="/tag">Tags</a></li>
-        </ul>
-      </div>
-    </nav>
-  </div>
+        <li class="right"><a (click)="logout()" routerLink="/login">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>

@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
     private router: Router,
     private authenticationService: AuthenticationService,
     public dialog: MatDialog
-  ) {}
+  ) { }
   loggedin: boolean;
   auth_token: string;
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {

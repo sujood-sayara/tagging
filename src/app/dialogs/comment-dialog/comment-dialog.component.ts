@@ -33,10 +33,7 @@ export class CommentDialogComponent implements OnInit, OnDestroy {
     private commentStore: Store<commentState>,
     private commentservice: CommentsService,
     @Inject(MAT_DIALOG_DATA) public imageinfo: any
-  ) {}
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
+  ) { }
   ngOnInit(): void {
     this.sub = new Subscription();
     this.sub.add(
@@ -91,5 +88,8 @@ export class CommentDialogComponent implements OnInit, OnDestroy {
   selectdComment(comment, index) {
     document.getElementById(`edit-${index}`).contentEditable = 'true';
     this.selectedCommentId = comment._id;
+  }
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }
